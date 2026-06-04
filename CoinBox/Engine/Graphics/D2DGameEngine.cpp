@@ -212,17 +212,20 @@ void D2DGameEngine::Shutdown()
 
 void D2DGameEngine::Tick()
 {
-    LARGE_INTEGER now = {};
-    QueryPerformanceCounter(&now);
+    LARGE_INTEGER now = {};         // int 랑 비교 못하는 엄청 큰 정수형 winAPI 자료형
+    QueryPerformanceCounter(&now);  // 현재 시간값 (고성능 / 엄청 큰 값이 나올 수 있음)
 
-    const float deltaSeconds =
+    float deltaTime =
         static_cast<float>(now.QuadPart - m_lastFrameTime.QuadPart) /
-        static_cast<float>(m_timerFrequency.QuadPart);
-    m_lastFrameTime = now;
+        static_cast<float>(m_timerFrequency.QuadPart);  // 
+    m_lastFrameTime = now;  // 다음 프레임 연산에 사용될 예정
 
-    Input::Update();
-    Update(deltaSeconds < 0.1f ? deltaSeconds : 0.1f);
-    Render();
+    if (deltaTime > 0.2f)
+        deltaTime = 0.2f;   // 컴퓨터가 너무 오래 끊기면 순간이동하는 정도가 너무 심해지니 적당히 조정하기
+
+    Input::Update();        // 입력 먼저 받고
+    Update(deltaTime);      // 업데이트 돌리고
+    Render();               // 렌더 호출
 }
 
 void D2DGameEngine::Resize(UINT width, UINT height)
