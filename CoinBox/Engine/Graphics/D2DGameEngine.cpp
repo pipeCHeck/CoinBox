@@ -217,7 +217,7 @@ void D2DGameEngine::Tick()
 
     float deltaTime =
         static_cast<float>(now.QuadPart - m_lastFrameTime.QuadPart) /
-        static_cast<float>(m_timerFrequency.QuadPart);  // 
+        static_cast<float>(m_timerFrequency.QuadPart);  // 이전 
     m_lastFrameTime = now;  // 다음 프레임 연산에 사용될 예정
 
     if (deltaTime > 0.2f)
@@ -478,11 +478,11 @@ void D2DGameEngine::InitializeScenes()
     m_sceneManager.SetCurrentScene(L"Demo");
 }
 
-void D2DGameEngine::Update(float deltaSeconds)
+void D2DGameEngine::Update(float deltaTime)
 {
     // 백그라운드 씬은 계속 돌고, 포그라운드 씬은 현재 선택된 하나만 돕니다.
-    m_sceneManager.UpdateBackground(deltaSeconds);
-    m_sceneManager.UpdateCurrent(deltaSeconds);
+    m_sceneManager.UpdateBackground(deltaTime);
+    m_sceneManager.UpdateCurrent(deltaTime);
 }
 
 void D2DGameEngine::Render()

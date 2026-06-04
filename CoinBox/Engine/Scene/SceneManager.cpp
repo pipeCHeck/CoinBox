@@ -35,6 +35,7 @@ bool SceneManager::SetCurrentScene(const std::wstring& name)
     return true;
 }
 
+// 백그라운드 씬 업데이트
 void SceneManager::UpdateBackground(float deltaSeconds)
 {
     if (m_backgroundScene)

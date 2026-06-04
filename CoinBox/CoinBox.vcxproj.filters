@@ -34,6 +34,24 @@
     <Filter Include="Engine\Etc">
       <UniqueIdentifier>{cf210cd3-6b89-4550-9738-b603e27baf21}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game">
+      <UniqueIdentifier>{c648fdb7-1f94-4bbd-8392-b99dab5e9727}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Scenes">
+      <UniqueIdentifier>{76db6e95-f275-4d16-a9f8-6de1c4764e40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Objects">
+      <UniqueIdentifier>{ba2416f3-612f-4355-a0f3-4366d31420eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Components">
+      <UniqueIdentifier>{532b2fba-1f0c-4288-a687-95eda220e036}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Scenes\Background">
+      <UniqueIdentifier>{68e8c4b8-2d3d-454a-a416-e71c6fdbc704}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Scenes\Foreground">
+      <UniqueIdentifier>{c2900a88-8f50-491b-ab2e-13ee952b4f9f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Core\Component.h">
@@ -57,9 +75,6 @@
     <ClInclude Include="Engine\Graphics\D2DGameEngine.h">
       <Filter>Engine\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Graphics\SpriteRenderer.h">
-      <Filter>Engine\Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Resources\ResourceManager.h">
       <Filter>Engine\Resources</Filter>
     </ClInclude>
@@ -74,6 +89,9 @@
     </ClInclude>
     <ClInclude Include="CoinBox.h">
       <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Graphics\SpriteRenderer.h">
+      <Filter>Engine\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -106,6 +124,9 @@
     </ClCompile>
     <ClCompile Include="CoinBox.cpp">
       <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Title.cpp">
+      <Filter>Game\Scenes\Foreground</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

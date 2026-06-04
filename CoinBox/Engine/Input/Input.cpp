@@ -1,4 +1,5 @@
 #include "Input.h"
+#include "framework.h"
 
 // static 멤버 변수는 클래스 안에 선언만 하고,
 // 실제 저장 공간은 .cpp 파일에서 한 번 정의해야 합니다.
@@ -17,75 +18,79 @@ void Input::Update()
 {
     // Windows 가상 키 코드는 0~255 범위에 들어갑니다.
     // 예: VK_LEFT, VK_SPACE, 'A'
-    for (int key = 0; key < 256; ++key)
+    for (int key = 0; key < 256; key++)
     {
-        // 이전 프레임 상태를 먼저 저장합니다.
-        // 그래야 "이번 프레임에 막 눌렸는지/막 떼졌는지" 알 수 있습니다.
-        m_previousKeys[key] = m_currentKeys[key];
+        m_previousKeys[key] = m_currentKeys[key];   // 이전 프레임의 입력 여부를 저장
 
         // GetAsyncKeyState는 현재 키가 눌려 있는지 알려주는 Win32 함수입니다.
         // 0x8000 비트가 켜져 있으면 현재 눌린 상태입니다.
-        m_currentKeys[key] = (GetAsyncKeyState(key) & 0x8000) != 0;
+        m_currentKeys[key] = (GetAsyncKeyState(key) & 0x8000) != 0; // and 연산자를 통해서 눌렸는지 여부 확인
+
+        /*
+        if (m_currentKeys[key])
+        {
+            wchar_t buffer[128];
+            swprintf_s(buffer, L"Key down: %d\n", key);
+            OutputDebugStringW(buffer);
+        }*/
     }
 
-    // POINT는 Win32에서 x, y 좌표를 담는 구조체입니다.
     POINT point = {};
-
-    // GetCursorPos는 화면 전체 기준 마우스 좌표를 가져옵니다.
-    if (GetCursorPos(&point))
+    if (GetCursorPos(&point))   // 전체화면 기준 마우스 좌표 가져옴
     {
-        if (m_hwnd)
-        {
-            // 화면 전체 기준 좌표를 현재 창 내부 기준 좌표로 바꿉니다.
-            ScreenToClient(m_hwnd, &point);
-        }
+        if (m_hwnd != nullptr)              // 핸들이 존재하면
+            ScreenToClient(m_hwnd, &point); // 창 내부 기준 좌표로 변환
 
-        m_mousePosition.x = static_cast<float>(point.x);
+        m_mousePosition.x = static_cast<float>(point.x);    // 마우스 위치값 저장
         m_mousePosition.y = static_cast<float>(point.y);
     }
 }
 
+// 키를 누르고 있는가?
 bool Input::IsKey(int key)
 {
-    // 키를 누르고 있는 동안 true입니다.
     return IsValidKey(key) && m_currentKeys[key];
 }
 
+// 키를 누른 순간만
 bool Input::IsKeyDown(int key)
 {
-    // 현재는 눌려 있고, 이전 프레임에는 안 눌려 있었으면 첫 프레임 입력입니다.
     return IsValidKey(key) && m_currentKeys[key] && !m_previousKeys[key];
 }
 
+// 키를 뗀 순간만
 bool Input::IsKeyUp(int key)
 {
-    // 현재는 안 눌려 있고, 이전 프레임에는 눌려 있었으면 뗀 첫 프레임입니다.
     return IsValidKey(key) && !m_currentKeys[key] && m_previousKeys[key];
 }
 
+// 마우스 입력 여부
 bool Input::IsMouse(MouseButton button)
 {
     return IsKey(ToVirtualKey(button));
 }
 
+// 마우스 입력을 한 순간
 bool Input::IsMouseDown(MouseButton button)
 {
     return IsKeyDown(ToVirtualKey(button));
 }
 
+// 마우스 입력을 뗀 순간 
 bool Input::IsMouseUp(MouseButton button)
 {
     return IsKeyUp(ToVirtualKey(button));
 }
 
+// 마우스 위치값 반환
 MousePosition Input::GetMousePosition()
 {
     return m_mousePosition;
 }
 
+// enum 값을 실제 키값으로 변환
 int Input::ToVirtualKey(MouseButton button)
 {
-    // 우리가 만든 MouseButton 값을 Windows 가상 키 코드로 바꿉니다.
     switch (button)
     {
     case MouseButton::Left:
@@ -103,8 +108,8 @@ int Input::ToVirtualKey(MouseButton button)
     }
 }
 
+// 가능한 입력 가짓수 내인지 확인
 bool Input::IsValidKey(int key)
 {
-    // 배열 크기가 256이므로 범위 밖 인덱스 접근을 막습니다.
     return key >= 0 && key < 256;
 }

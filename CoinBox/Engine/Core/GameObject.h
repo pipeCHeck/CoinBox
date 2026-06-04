@@ -38,8 +38,8 @@ public:
     template <typename TComponent, typename... TArgs>
     TComponent* AddComponent(TArgs&&... args)
     {
-        static_assert(std::is_base_of<Component, TComponent>::value,
-            "TComponent must derive from Component.");
+        // 넣은 TComponent가 Component를 상속받은 경우에만 처리
+        static_assert(std::is_base_of<Component, TComponent>::value, "TComponent must derive from Component.");
 
         auto component = std::make_unique<TComponent>(std::forward<TArgs>(args)...);
         TComponent* rawComponent = component.get();
