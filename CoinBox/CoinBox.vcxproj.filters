@@ -128,6 +128,9 @@
     <ClCompile Include="Title.cpp">
       <Filter>Game\Scenes\Foreground</Filter>
     </ClCompile>
+    <ClCompile Include="PlayerCtrl.cpp">
+      <Filter>Game\Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="CoinBox.rc">
