@@ -18,8 +18,11 @@ public:
     // 오브젝트가 처음 준비될 때 한 번 호출됩니다.
     virtual void Init() {}
 
-    // 매 프레임 호출됩니다. deltaSeconds는 이전 프레임 이후 지난 시간(초)입니다.
-    virtual void Update(float deltaSeconds) {}
+    // 
+    virtual void Start() {}
+
+    // 매 프레임 호출됩니다. deltaTime는 이전 프레임 이후 지난 시간(초)입니다.
+    virtual void Update(float deltaTime) {}
 
     // 매 프레임 그릴 때 호출됩니다. D2D 그리기 명령은 여기서 실행합니다.
     virtual void Render(ID2D1DeviceContext* d2dContext) {}

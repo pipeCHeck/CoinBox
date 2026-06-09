@@ -18,7 +18,8 @@ public:
 
     // SceneManager나 엔진 루프가 호출합니다.
     void Init();
-    void Update(float deltaSeconds);
+    void Start();
+    void Update(float deltaTime);
     void Render(ID2D1DeviceContext* d2dContext);
 
     // 씬에 오브젝트를 추가합니다. 씬이 unique_ptr 소유권을 가져갑니다.
@@ -27,11 +28,13 @@ public:
 protected:
     // 실제 씬을 만들 때 이 함수들을 override해서 씬 전용 로직을 넣습니다.
     virtual void OnInit() {}
-    virtual void OnUpdate(float deltaSeconds) {}
+    virtual void OnStart() {}
+    virtual void OnUpdate(float deltaTime) {}
     virtual void OnRender(ID2D1DeviceContext* d2dContext) {}
 
 private:
     bool m_initialized = false;
+    bool m_started = false;
     std::vector<std::unique_ptr<GameObject>> m_objects;
 };
 

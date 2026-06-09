@@ -25,9 +25,6 @@
     <Filter Include="Engine\Input">
       <UniqueIdentifier>{a37cf35d-bde2-49dd-9992-109140d20d30}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Graphics">
-      <UniqueIdentifier>{8b6e7cfa-9a0a-427e-a4bf-4a3342828e36}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\Resources">
       <UniqueIdentifier>{1486297c-b90b-4ec6-852c-fcc348f11fbd}</UniqueIdentifier>
     </Filter>
@@ -52,6 +49,12 @@
     <Filter Include="Game\Scenes\Foreground">
       <UniqueIdentifier>{c2900a88-8f50-491b-ab2e-13ee952b4f9f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Demo">
+      <UniqueIdentifier>{8b6e7cfa-9a0a-427e-a4bf-4a3342828e36}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Demo">
+      <UniqueIdentifier>{f7b41e36-53f0-4d6e-93f0-3d0fed8e20de}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Core\Component.h">
@@ -72,9 +75,6 @@
     <ClInclude Include="Engine\Input\Input.h">
       <Filter>Engine\Input</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Graphics\D2DGameEngine.h">
-      <Filter>Engine\Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Resources\ResourceManager.h">
       <Filter>Engine\Resources</Filter>
     </ClInclude>
@@ -93,6 +93,18 @@
     <ClInclude Include="Engine\Graphics\SpriteRenderer.h">
       <Filter>Engine\Components</Filter>
     </ClInclude>
+    <ClInclude Include="TitleScene.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="BackScene.h">
+      <Filter>Game\Scenes\Background</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Graphics\D2DGameEngine.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Demo\DemoScenes.h">
+      <Filter>Demo</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Core\Component.cpp">
@@ -110,12 +122,6 @@
     <ClCompile Include="Engine\Input\Input.cpp">
       <Filter>Engine\Input</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Graphics\D2DGameEngine.cpp">
-      <Filter>Engine\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Graphics\SpriteRenderer.cpp">
-      <Filter>Engine\Graphics</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Resources\ResourceManager.cpp">
       <Filter>Engine\Resources</Filter>
     </ClCompile>
@@ -125,11 +131,23 @@
     <ClCompile Include="CoinBox.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
-    <ClCompile Include="Title.cpp">
-      <Filter>Game\Scenes\Foreground</Filter>
-    </ClCompile>
     <ClCompile Include="PlayerCtrl.cpp">
       <Filter>Game\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleScene.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="BackScene.cpp">
+      <Filter>Game\Scenes\Background</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Graphics\D2DGameEngine.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Graphics\SpriteRenderer.cpp">
+      <Filter>Engine\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Demo\DemoScenes.cpp">
+      <Filter>Demo</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

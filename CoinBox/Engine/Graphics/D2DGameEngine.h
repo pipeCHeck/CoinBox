@@ -15,8 +15,7 @@
 // - 현재 실행 중인 SceneManager를 돌린다.
 //
 // 주의:
-// - 실제 게임 오브젝트나 플레이어 로직은 원래 여기보다 Game 폴더 쪽으로 빼는 것이 좋습니다.
-// - 지금 DemoScene이 D2DGameEngine.cpp 안에 있는 것은 샘플용 임시 구조입니다.
+// - 실제 게임 오브젝트나 플레이어 로직은 엔진 밖의 Game 또는 Demo 폴더 쪽에 둡니다.
 class D2DGameEngine
 {
 public:
@@ -54,11 +53,11 @@ private:
     // D2D/D3D 장치 전체를 버립니다.
     void DiscardDeviceResources();
 
-    // 현재 샘플 씬들을 생성하고 SceneManager에 등록합니다.
+    // 시작 시 사용할 씬들을 생성하고 SceneManager에 등록합니다.
     void InitializeScenes();
 
     // 게임 상태 갱신입니다. 실제 오브젝트 Update는 SceneManager가 처리합니다.
-    void Update(float deltaSeconds);
+    void Update(float deltaTime);
 
     // 화면 그리기입니다. 실제 오브젝트 Render는 SceneManager가 처리합니다.
     void Render();
@@ -87,7 +86,7 @@ private:
     Microsoft::WRL::ComPtr<ID2D1SolidColorBrush> m_textBrush;
 
     // QueryPerformanceCounter용 타이머 값입니다.
-    // deltaSeconds를 계산해서 프레임 속도와 무관하게 움직이기 위해 사용합니다.
+    // deltaTime을 계산해서 프레임 속도와 무관하게 움직이기 위해 사용합니다.
     LARGE_INTEGER m_timerFrequency = {};
     LARGE_INTEGER m_lastFrameTime = {};
     bool m_comInitialized = false;

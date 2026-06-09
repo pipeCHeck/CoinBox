@@ -2,10 +2,14 @@
 #include "D2DGameEngine.h"
 #include "Input.h"
 #include "ResourceManager.h"
-#include "SpriteRenderer.h"
+
+
+#include "Demo/DemoScenes.h"
+
+#include "BackScene.h"
+#include "TitleScene.h"
 
 #include <algorithm>
-#include <cmath>
 #include <dxgi1_2.h>
 #include <memory>
 
@@ -23,142 +27,6 @@ namespace
     {
         target.Reset();
     }
-
-    class DemoBackgroundScene final : public BackgroundScene
-    {
-    protected:
-        void OnUpdate(float deltaSeconds) override
-        {
-            // 백그라운드 씬은 보통 저장 데이터, 전역 타이머, 리소스 상태 등을 갱신합니다.
-            m_elapsedSeconds += deltaSeconds;
-        }
-
-    private:
-        float m_elapsedSeconds = 0.0f;
-    };
-
-    class GridRenderer final : public Component
-    {
-    public:
-        void Render(ID2D1DeviceContext* d2dContext) override
-        {
-            if (!d2dContext)
-            {
-                return;
-            }
-
-            ComPtr<ID2D1SolidColorBrush> brush;
-            if (FAILED(d2dContext->CreateSolidColorBrush(
-                D2D1::ColorF(0.24f, 0.29f, 0.36f, 0.55f),
-                &brush)))
-            {
-                return;
-            }
-
-            const D2D1_SIZE_F size = d2dContext->GetSize();
-            for (float x = 0.5f; x < size.width; x += 48.0f)
-            {
-                d2dContext->DrawLine(
-                    D2D1::Point2F(x, 0.0f),
-                    D2D1::Point2F(x, size.height),
-                    brush.Get(),
-                    1.0f);
-            }
-
-            for (float y = 0.5f; y < size.height; y += 48.0f)
-            {
-                d2dContext->DrawLine(
-                    D2D1::Point2F(0.0f, y),
-                    D2D1::Point2F(size.width, y),
-                    brush.Get(),
-                    1.0f);
-            }
-        }
-    };
-
-    class PlayerCircleRenderer final : public Component
-    {
-    public:
-        void Update(float deltaSeconds) override
-        {
-            // Component는 자기 역할만 처리합니다. 여기서는 좌우 이동만 담당합니다.
-            m_elapsedSeconds += deltaSeconds;
-
-            Transform& transform = GetOwner()->GetTransform();
-
-            const float speed = 320.0f;
-            if (Input::IsKey(VK_LEFT))
-            {
-                transform.position.x -= speed * deltaSeconds;
-            }
-            if (Input::IsKey(VK_RIGHT))
-            {
-                transform.position.x += speed * deltaSeconds;
-            }
-
-            if (Input::IsMouseDown(MouseButton::Left))
-            {
-                const MousePosition mouse = Input::GetMousePosition();
-                transform.position.x = mouse.x;
-                transform.position.y = mouse.y;
-            }
-        }
-
-        void Render(ID2D1DeviceContext* d2dContext) override
-        {
-            if (!d2dContext)
-            {
-                return;
-            }
-
-            Transform& transform = GetOwner()->GetTransform();
-            const D2D1_SIZE_F size = d2dContext->GetSize();
-            const float minX = 40.0f;
-            const float maxX = size.width - 40.0f;
-            transform.position.x = transform.position.x < minX ? minX : transform.position.x;
-            transform.position.x = transform.position.x > maxX ? maxX : transform.position.x;
-
-            ComPtr<ID2D1SolidColorBrush> brush;
-            if (FAILED(d2dContext->CreateSolidColorBrush(
-                D2D1::ColorF(0.18f, 0.64f, 0.96f),
-                &brush)))
-            {
-                return;
-            }
-
-            const float baseY = transform.position.y > 0.0f
-                ? transform.position.y
-                : size.height * 0.62f;
-            const float y = baseY + std::sin(m_elapsedSeconds * 3.0f) * 14.0f;
-            const D2D1_ELLIPSE player = D2D1::Ellipse(
-                D2D1::Point2F(transform.position.x, y),
-                34.0f * transform.scale.x,
-                34.0f * transform.scale.y);
-
-            d2dContext->FillEllipse(player, brush.Get());
-        }
-
-    private:
-        float m_elapsedSeconds = 0.0f;
-    };
-
-    class DemoScene final : public ForegroundScene
-    {
-    protected:
-        void OnInit() override
-        {
-            // 씬을 만들 때는 GameObject를 만들고, 필요한 Component를 붙인 뒤, 씬에 추가합니다.
-            auto grid = std::make_unique<GameObject>();
-            grid->AddComponent<GridRenderer>();
-            AddObject(std::move(grid));
-
-            auto player = std::make_unique<GameObject>();
-            player->GetTransform().position = Vector2(320.0f, 0.0f);
-            player->GetTransform().scale = Vector2(1.0f, 1.0f);
-            player->AddComponent<PlayerCircleRenderer>();
-            AddObject(std::move(player));
-        }
-    };
 }
 
 HRESULT D2DGameEngine::Initialize(HWND hwnd)
@@ -450,7 +318,7 @@ HRESULT D2DGameEngine::CreateWindowSizeDependentResources()
 
 void D2DGameEngine::DiscardWindowSizeDependentResources()
 {
-    ResourceManager::ClearBitmaps();
+    ResourceManager::ClearTextures();
     SafeReleaseTarget(m_textBrush);
     SafeReleaseTarget(m_d2dTargetBitmap);
 }
@@ -473,8 +341,10 @@ void D2DGameEngine::DiscardDeviceResources()
 void D2DGameEngine::InitializeScenes()
 {
     // 엔진 시작 시 씬들을 등록하고, 현재 사용할 포그라운드 씬을 선택합니다.
-    m_sceneManager.SetBackgroundScene(std::make_unique<DemoBackgroundScene>());
-    m_sceneManager.AddForegroundScene(L"Demo", std::make_unique<DemoScene>());
+    //m_sceneManager.SetBackgroundScene(std::make_unique<DemoGame::DemoBackgroundScene>());
+    //m_sceneManager.AddForegroundScene(L"Demo", std::make_unique<DemoGame::DemoScene>());
+    m_sceneManager.SetBackgroundScene(std::make_unique<WizardRaid::BackScene>());
+    m_sceneManager.AddForegroundScene(L"Demo", std::make_unique<WizardRaid::TitleScene>());
     m_sceneManager.SetCurrentScene(L"Demo");
 }
 
@@ -498,6 +368,7 @@ void D2DGameEngine::Render()
     // 실제 게임 화면은 현재 포그라운드 씬이 그립니다.
     m_sceneManager.RenderCurrent(m_d2dContext.Get());
 
+    /*
     const float width = static_cast<float>(m_width);
     const D2D1_RECT_F textRect = D2D1::RectF(24.0f, 22.0f, width - 24.0f, 80.0f);
     m_d2dContext->DrawTextW(
@@ -506,6 +377,7 @@ void D2DGameEngine::Render()
         m_textFormat.Get(),
         textRect,
         m_textBrush.Get());
+    */
 
     HRESULT hr = m_d2dContext->EndDraw();
     if (hr == D2DERR_RECREATE_TARGET)

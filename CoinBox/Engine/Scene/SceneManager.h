@@ -28,8 +28,8 @@ public:
     ForegroundScene* GetCurrentScene() const { return m_currentScene; }
 
     // 엔진 루프에서 호출됩니다.
-    void UpdateBackground(float deltaSeconds);
-    void UpdateCurrent(float deltaSeconds);
+    void UpdateBackground(float deltaTime);
+    void UpdateCurrent(float deltaTime);
     void RenderCurrent(ID2D1DeviceContext* d2dContext);
 
 private:

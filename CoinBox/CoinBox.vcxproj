@@ -135,7 +135,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="BackScene.h" />
     <ClInclude Include="CoinBox.h" />
+    <ClInclude Include="Demo\DemoScenes.h" />
     <ClInclude Include="Engine\Core\Component.h" />
     <ClInclude Include="Engine\Core\GameObject.h" />
     <ClInclude Include="Engine\Core\Transform.h" />
@@ -148,9 +150,12 @@
     <ClInclude Include="framework.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="TitleScene.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BackScene.cpp" />
     <ClCompile Include="CoinBox.cpp" />
+    <ClCompile Include="Demo\DemoScenes.cpp" />
     <ClCompile Include="Engine\Core\Component.cpp" />
     <ClCompile Include="Engine\Core\GameObject.cpp" />
     <ClCompile Include="Engine\Graphics\D2DGameEngine.cpp" />
@@ -161,7 +166,7 @@
     <ClCompile Include="Engine\Scene\SceneManager.cpp" />
     <ClCompile Include="Enum.h" />
     <ClCompile Include="PlayerCtrl.cpp" />
-    <ClCompile Include="Title.cpp" />
+    <ClCompile Include="TitleScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="CoinBox.rc" />

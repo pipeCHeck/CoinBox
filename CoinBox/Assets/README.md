@@ -15,7 +15,7 @@ Assets/
 코드에서는 전체 경로를 직접 쓰지 않고, `ResourceManager`에 상대 경로로 등록합니다.
 
 ```cpp
-ResourceManager::LoadBitmap(L"player", L"Images/player.png");
+ResourceManager::LoadTexture(L"player", L"Images/player.png");
 ResourceManager::LoadAudio(L"click", L"Audio/click.wav");
 ```
 

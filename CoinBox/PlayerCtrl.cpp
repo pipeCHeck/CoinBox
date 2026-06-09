@@ -1,10 +1,9 @@
 #include "Component.h"
 
-namespace {
+namespace WizardRaid {
 
 	class PlayerCtrl : public Component {
 
-		if () 
 	};
 
 }

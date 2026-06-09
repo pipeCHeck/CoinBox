@@ -26,7 +26,7 @@ ResourceManager::SetAssetRoot(L"Assets");
 씬의 `OnInit()` 같은 초기화 지점에서 한 번 등록합니다.
 
 ```cpp
-ResourceManager::LoadBitmap(L"player", L"Images/player.png");
+ResourceManager::LoadTexture(L"player", L"Images/player.png");
 ```
 
 - `L"player"`: 코드에서 사용할 이름입니다.
@@ -83,7 +83,7 @@ ResourceManager::StopAudio();
 ```cpp
 void Render(...)
 {
-    ResourceManager::LoadBitmap(L"player", L"Images/player.png");
+    ResourceManager::LoadTexture(L"player", L"Images/player.png");
 }
 ```
 
@@ -92,7 +92,7 @@ void Render(...)
 ```cpp
 void OnInit()
 {
-    ResourceManager::LoadBitmap(L"player", L"Images/player.png");
+    ResourceManager::LoadTexture(L"player", L"Images/player.png");
 }
 ```
 

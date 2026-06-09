@@ -10,8 +10,8 @@ using Microsoft::WRL::ComPtr;
 ID2D1DeviceContext* ResourceManager::m_d2dContext = nullptr;
 ComPtr<IWICImagingFactory> ResourceManager::m_wicFactory;
 std::wstring ResourceManager::m_assetRoot = L"Assets";
-std::unordered_map<std::wstring, std::wstring> ResourceManager::m_bitmapPaths;
-std::unordered_map<std::wstring, ComPtr<ID2D1Bitmap>> ResourceManager::m_bitmaps;
+std::unordered_map<std::wstring, std::wstring> ResourceManager::m_texturePaths;
+std::unordered_map<std::wstring, ComPtr<ID2D1Bitmap>> ResourceManager::m_textures;
 std::unordered_map<std::wstring, std::wstring> ResourceManager::m_audioPaths;
 
 HRESULT ResourceManager::Initialize(ID2D1DeviceContext* d2dContext)
@@ -33,8 +33,8 @@ HRESULT ResourceManager::Initialize(ID2D1DeviceContext* d2dContext)
 void ResourceManager::Shutdown()
 {
     StopAudio();
-    ClearBitmaps();
-    m_bitmapPaths.clear();
+    ClearTextures();
+    m_texturePaths.clear();
     m_audioPaths.clear();
     m_wicFactory.Reset();
     m_d2dContext = nullptr;
@@ -66,17 +66,17 @@ std::wstring ResourceManager::MakeAssetPath(const std::wstring& relativePath)
     return m_assetRoot + L"\\" + relativePath;
 }
 
-HRESULT ResourceManager::LoadBitmap(const std::wstring& key, const std::wstring& relativePath)
+HRESULT ResourceManager::LoadTexture(const std::wstring& key, const std::wstring& relativePath)
 {
-    m_bitmapPaths[key] = relativePath;
+    m_texturePaths[key] = relativePath;
 
     if (!m_d2dContext || !m_wicFactory)
     {
         return E_FAIL;
     }
 
-    const auto existing = m_bitmaps.find(key);
-    if (existing != m_bitmaps.end())
+    const auto existing = m_textures.find(key);
+    if (existing != m_textures.end())
     {
         return S_OK;
     }
@@ -114,46 +114,46 @@ HRESULT ResourceManager::LoadBitmap(const std::wstring& key, const std::wstring&
             WICBitmapPaletteTypeMedianCut);
     }
 
-    ComPtr<ID2D1Bitmap> bitmap;
+    ComPtr<ID2D1Bitmap> texture;
     if (SUCCEEDED(hr))
     {
-        hr = m_d2dContext->CreateBitmapFromWicBitmap(converter.Get(), nullptr, &bitmap);
+        hr = m_d2dContext->CreateBitmapFromWicBitmap(converter.Get(), nullptr, &texture);
     }
 
     if (SUCCEEDED(hr))
     {
-        m_bitmaps[key] = bitmap;
+        m_textures[key] = texture;
     }
 
     return hr;
 }
 
-ID2D1Bitmap* ResourceManager::GetBitmap(const std::wstring& key)
+ID2D1Bitmap* ResourceManager::GetTexture(const std::wstring& key)
 {
-    const auto found = m_bitmaps.find(key);
-    if (found != m_bitmaps.end())
+    const auto found = m_textures.find(key);
+    if (found != m_textures.end())
     {
         return found->second.Get();
     }
 
-    const auto foundPath = m_bitmapPaths.find(key);
-    if (foundPath == m_bitmapPaths.end())
+    const auto foundPath = m_texturePaths.find(key);
+    if (foundPath == m_texturePaths.end())
     {
         return nullptr;
     }
 
-    if (FAILED(LoadBitmap(key, foundPath->second)))
+    if (FAILED(LoadTexture(key, foundPath->second)))
     {
         return nullptr;
     }
 
-    const auto reloaded = m_bitmaps.find(key);
-    return reloaded != m_bitmaps.end() ? reloaded->second.Get() : nullptr;
+    const auto reloaded = m_textures.find(key);
+    return reloaded != m_textures.end() ? reloaded->second.Get() : nullptr;
 }
 
-void ResourceManager::ClearBitmaps()
+void ResourceManager::ClearTextures()
 {
-    m_bitmaps.clear();
+    m_textures.clear();
 }
 
 void ResourceManager::LoadAudio(const std::wstring& key, const std::wstring& relativePath)

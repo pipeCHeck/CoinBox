@@ -19,17 +19,32 @@ void Scene::Init()
     m_initialized = true;
 }
 
-void Scene::Update(float deltaSeconds)
+void Scene::Start()
+{
+    if (m_started)
+    {
+        return;
+    }
+
+    OnStart();
+
+    for (const auto& object : m_objects)
+    {
+        object->Start();
+    }
+}
+
+void Scene::Update(float deltaTime)
 {
     Init();
 
     // 씬 자체 로직을 먼저 갱신합니다.
-    OnUpdate(deltaSeconds);
+    OnUpdate(deltaTime);
 
     // 그 다음 씬 안의 오브젝트들이 자기 컴포넌트를 갱신합니다.
     for (const auto& object : m_objects)
     {
-        object->Update(deltaSeconds);
+        object->Update(deltaTime);
     }
 }
 

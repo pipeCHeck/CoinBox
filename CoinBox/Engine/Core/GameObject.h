@@ -30,7 +30,8 @@ public:
 
     // Scene이 호출합니다. 직접 호출할 일은 거의 없습니다.
     void Init();
-    void Update(float deltaSeconds);
+    void Start();
+    void Update(float deltaTime);
     void Render(ID2D1DeviceContext* d2dContext);
 
     // 이 오브젝트에 새 컴포넌트를 붙입니다.
@@ -79,5 +80,6 @@ private:
     Transform* m_transform = nullptr;
     bool m_active = true;
     bool m_initialized = false;
+    bool m_started = false;
     std::vector<std::unique_ptr<Component>> m_components;
 };

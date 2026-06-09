@@ -21,7 +21,20 @@ void GameObject::Init()
     m_initialized = true;
 }
 
-void GameObject::Update(float deltaSeconds)
+void GameObject::Start()
+{
+    if (m_started)
+    {
+        return;
+    }
+
+    for (const auto& component : m_components)
+    {
+        component->Start();
+    }
+}
+
+void GameObject::Update(float deltaTime)
 {
     if (!m_active)
     {
@@ -32,7 +45,7 @@ void GameObject::Update(float deltaSeconds)
 
     for (const auto& component : m_components)
     {
-        component->Update(deltaSeconds);
+        component->Update(deltaTime);
     }
 }
 

@@ -12,8 +12,8 @@
 // 사용 흐름:
 // 1. 엔진 시작 시 Initialize로 D2D 장치와 WIC를 준비합니다.
 // 2. SetAssetRoot로 Assets 폴더 위치를 정합니다.
-// 3. LoadBitmap / LoadAudio로 파일을 키 이름과 함께 등록합니다.
-// 4. GetBitmap / PlayAudio로 등록된 리소스를 사용합니다.
+// 3. LoadTexture / LoadAudio로 파일을 키 이름과 함께 등록합니다.
+// 4. GetTexture / PlayAudio로 등록된 리소스를 사용합니다.
 class ResourceManager
 {
 public:
@@ -24,9 +24,9 @@ public:
     static std::wstring GetAssetRoot();
     static std::wstring MakeAssetPath(const std::wstring& relativePath);
 
-    static HRESULT LoadBitmap(const std::wstring& key, const std::wstring& relativePath);
-    static ID2D1Bitmap* GetBitmap(const std::wstring& key);
-    static void ClearBitmaps();
+    static HRESULT LoadTexture(const std::wstring& key, const std::wstring& relativePath);
+    static ID2D1Bitmap* GetTexture(const std::wstring& key);
+    static void ClearTextures();
 
     static void LoadAudio(const std::wstring& key, const std::wstring& relativePath);
     static bool PlayAudio(const std::wstring& key, bool loop = false);
@@ -36,7 +36,7 @@ private:
     static ID2D1DeviceContext* m_d2dContext;
     static Microsoft::WRL::ComPtr<IWICImagingFactory> m_wicFactory;
     static std::wstring m_assetRoot;
-    static std::unordered_map<std::wstring, std::wstring> m_bitmapPaths;
-    static std::unordered_map<std::wstring, Microsoft::WRL::ComPtr<ID2D1Bitmap>> m_bitmaps;
+    static std::unordered_map<std::wstring, std::wstring> m_texturePaths;
+    static std::unordered_map<std::wstring, Microsoft::WRL::ComPtr<ID2D1Bitmap>> m_textures;
     static std::unordered_map<std::wstring, std::wstring> m_audioPaths;
 };
