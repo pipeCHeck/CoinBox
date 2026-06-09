@@ -27,6 +27,9 @@ public:
     // 매 프레임 그릴 때 호출됩니다. D2D 그리기 명령은 여기서 실행합니다.
     virtual void Render(ID2D1DeviceContext* d2dContext) {}
 
+    // 같은 GameObject 트리 안에서 렌더 순서를 정합니다. 값이 클수록 나중에 그립니다.
+    virtual int GetRenderOrder() const { return 0; }
+
 private:
     friend class GameObject;
 

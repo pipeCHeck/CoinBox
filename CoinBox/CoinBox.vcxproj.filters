@@ -55,6 +55,12 @@
     <Filter Include="Demo">
       <UniqueIdentifier>{f7b41e36-53f0-4d6e-93f0-3d0fed8e20de}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Animation">
+      <UniqueIdentifier>{35fb0baa-6015-4b04-a8ec-5d257c56ed3f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Characters">
+      <UniqueIdentifier>{de60eb79-e752-45b1-afcf-ce576b0ce390}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Core\Component.h">
@@ -93,6 +99,9 @@
     <ClInclude Include="Engine\Graphics\SpriteRenderer.h">
       <Filter>Engine\Components</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\Graphics\SpriteRig.h">
+      <Filter>Engine\Components</Filter>
+    </ClInclude>
     <ClInclude Include="BackScene.h">
       <Filter>Game\Scenes\Background</Filter>
     </ClInclude>
@@ -104,6 +113,15 @@
     </ClInclude>
     <ClInclude Include="TitleScene.h">
       <Filter>Game\Scenes\Foreground</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Animation\Animation.h">
+      <Filter>Engine\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Characters\CoffiaCharacterFactory.h">
+      <Filter>Game\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerCtrl.h">
+      <Filter>Game\Objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -143,11 +161,20 @@
     <ClCompile Include="Engine\Graphics\SpriteRenderer.cpp">
       <Filter>Engine\Components</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Graphics\SpriteRig.cpp">
+      <Filter>Engine\Components</Filter>
+    </ClCompile>
     <ClCompile Include="Demo\DemoScenes.cpp">
       <Filter>Demo</Filter>
     </ClCompile>
     <ClCompile Include="TitleScene.cpp">
       <Filter>Game\Scenes\Foreground</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Animation\Animation.cpp">
+      <Filter>Engine\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Characters\CoffiaCharacterFactory.cpp">
+      <Filter>Game\Characters</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
