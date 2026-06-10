@@ -70,7 +70,7 @@ const GameObject* GameObject::FindChild(const std::wstring& name) const
 
 Transform GameObject::GetWorldTransform() const
 {
-    const Transform& localTransform = GetTransform();
+    const Transform localTransform = GetTransform() + GetAniTransform();
 
     if (!m_parent)
     {

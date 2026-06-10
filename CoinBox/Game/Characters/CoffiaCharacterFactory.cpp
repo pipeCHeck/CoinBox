@@ -54,7 +54,7 @@ namespace WizardRaid
             ->GetTransform().scale = Vector2(0.8f, 0.8f);
 
         // 몸통 계층입니다. renderOrder가 음수인 파츠는 얼굴보다 뒤에 그려집니다.
-        rig.AddNode(L"Null_All", L"Body", Vector2(0.0f, 220.0f), Vector2(0.0f, 180.0f), SpriteSheetInfo(), true, -100);
+        rig.AddNode(L"Null_All", L"Body", Vector2(0.0f, 220.0f), Vector2(0.0f, 180.0f), SpriteSheetInfo(), true, -70);
         rig.AddNode(L"Body", L"Body_ArmL", Vector2(-60.0f, -298.0f), Vector2(117.0f, -158.0f), SpriteSheetInfo(), true, -80);
         rig.AddNode(L"Body", L"Body_ArmR", Vector2(60.0f, -298.0f), Vector2(-107.0f, -158.0f), SpriteSheetInfo(), true, -80);
         rig.AddNode(L"Body", L"Face", Vector2(2.0f, -362.0f), Vector2(0.0f, 140.0f), SpriteSheetInfo(), true, 0);
@@ -94,16 +94,16 @@ namespace WizardRaid
         rig.AddNode(L"Null_Hair", L"Hair_AhogeL", Vector2(0.0f, -26.0f), Vector2(12.0f, 40.0f), SpriteSheetInfo{ 3, 1, 3, 0 }, true, 70);
         rig.AddNode(L"Null_Hair", L"Hair_AhogeR", Vector2(0.0f, -26.0f), Vector2(-42.0f, 40.0f), SpriteSheetInfo{ 3, 1, 3, 0 }, true, 70);
 
-        rig.AddNode(L"Null_All", L"ArmL", Vector2(-175.0f, 200.0f), Vector2(-45.0f, 95.0f), SpriteSheetInfo{ 2, 1, 2, 0 }, true, 80);
-        rig.AddNode(L"ArmL", L"HandL", Vector2(100.0f, -207.0f), Vector2(-12.0f, 70.0f), SpriteSheetInfo{ 2, 2, 4, 2 }, true, 90);
+        rig.AddNode(L"Null_All", L"ArmL", Vector2(-175.0f, 200.0f), Vector2(-45.0f, 95.0f), SpriteSheetInfo{ 2, 1, 2, 0 }, true, 90);
+        rig.AddNode(L"ArmL", L"HandL", Vector2(100.0f, -207.0f), Vector2(-12.0f, 70.0f), SpriteSheetInfo{ 2, 2, 4, 2 }, true, 80);
     }
 
     void CoffiaCharacterFactory::ConfigureAnimator(Animator& animator)
     {
         animator.AddClip(CreateIdleClip());
         animator.AddClip(Greeting_SmilingEyes_Clip());
+        animator.AddClip(ChinRest_Clip());
         animator.AddClip(CreateGreetingClip());
-        //animator.Play(L"Greeting_SmilingEyes_Clip");
     }
 
     AnimationClip CoffiaCharacterFactory::CreateIdleClip()
@@ -111,8 +111,8 @@ namespace WizardRaid
         AnimationClip clip(L"CoffiaIdle");
         clip.SetLooping(true);
 
-        clip.AddKeyFrame(AnimationClip::Position(0.0f, L"Body", Vector2(0.0f, 220.0f), Vector2(0.0f, 226.0f), 60.0f, EaseType::EaseInOut));
-        clip.AddKeyFrame(AnimationClip::Position(60.0f, L"Body", Vector2(0.0f, 226.0f), Vector2(0.0f, 220.0f), 60.0f, EaseType::EaseInOut));
+        clip.AddKeyFrame(AnimationClip::Position(0.0f, L"Body", Vector2(0.0f, 0.0f), Vector2(0.0f, 6.0f), 60.0f, EaseType::EaseInOut));
+        clip.AddKeyFrame(AnimationClip::Position(60.0f, L"Body", Vector2(0.0f, 6.0f), Vector2(0.0f, 0.0f), 60.0f, EaseType::EaseInOut));
         clip.AddKeyFrame(AnimationClip::Rotation(0.0f, L"HairF_Bang", 0.0f, 3.0f, 60.0f, EaseType::EaseInOut));
         clip.AddKeyFrame(AnimationClip::Rotation(60.0f, L"HairF_Bang", 3.0f, 0.0f, 60.0f, EaseType::EaseInOut));
         clip.AddKeyFrame(AnimationClip::Rotation(0.0f, L"Hair_AhogeL", -4.0f, 5.0f, 60.0f, EaseType::EaseInOut));
@@ -146,8 +146,8 @@ namespace WizardRaid
         clip.AddKeyFrame(clip.PositionTo(0, L"ArmL", Vector2(20, -17), 20, EaseType::EaseInOut));
         clip.AddKeyFrame(clip.PositionTo(20, L"ArmL", Vector2(9, 0), 20, EaseType::EaseInOut));
         clip.AddKeyFrame(clip.PositionTo(40, L"ArmL", Vector2(16.7f, -8), 20, EaseType::EaseInOut));
-        clip.AddKeyFrame(clip.PositionTo(60, L"ArmL", Vector2(12.3, 0), 20, EaseType::EaseInOut));
-        clip.AddKeyFrame(clip.PositionTo(80, L"ArmL", Vector2(12.7, -0.7), 10, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.PositionTo(60, L"ArmL", Vector2(12.3f, 0.0f), 20, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.PositionTo(80, L"ArmL", Vector2(12.7f, -0.7f), 10, EaseType::EaseInOut));
         clip.AddKeyFrame(clip.PositionTo(110, L"ArmL", Vector2(15, 16.5), 40, EaseType::EaseInOut));
 
         clip.AddKeyFrame(clip.Sprite(0, L"HandL", 2));
@@ -293,6 +293,177 @@ namespace WizardRaid
         return clip;
     }
 
+    AnimationClip CoffiaCharacterFactory::ChinRest_Clip()
+    {
+        AnimationClip clip(L"ChinRest_Clip");
+        clip.SetLooping(true);
+
+        clip.AddKeyFrame(clip.PositionTo(0, L"ArmL", Vector2(0, -49), 35, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.PositionTo(35, L"ArmL", Vector2(-47, -13), 15, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.PositionTo(50, L"ArmL", Vector2(-47, -15), 10, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.PositionTo(60, L"ArmL", Vector2(-49, -12.498f), 10, EaseType::EaseInOut));
+
+        clip.AddKeyFrame(clip.RotationTo(0, L"ArmL", 66, 0, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.RotationTo(0, L"ArmL", -5, 35, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.RotationTo(35, L"ArmL", 2, 15, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.RotationTo(50, L"ArmL", 1, 10, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.RotationTo(60, L"ArmL", 2, 10, EaseType::EaseInOut));
+
+        clip.AddKeyFrame(clip.Sprite(0, L"HandL", 0));
+        clip.AddKeyFrame(clip.Sprite(0, L"HandL_Line", 1));
+        clip.AddKeyFrame(clip.RotationTo(0, L"HandL", 0, 35, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.RotationTo(35, L"HandL", 4, 15, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.RotationTo(50, L"HandL", 3, 10, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.RotationTo(60, L"HandL", 0, 10, EaseType::EaseInOut));
+
+        clip.AddKeyFrame(clip.Sprite(0, L"Mouth", 1));
+        clip.AddKeyFrame(clip.Sprite(50, L"Mouth", 2));
+        clip.AddKeyFrame(clip.PositionTo(0, L"Mouth", Vector2(0, -6), 35, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.PositionTo(35, L"Mouth", Vector2(0, 0), 17, EaseType::EaseInOut));
+
+        clip.AddKeyFrame(clip.PositionTo(0, L"Nose", Vector2(0, -18.5f), 35, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.PositionTo(35, L"Nose", Vector2(0, 11), 17, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.PositionTo(52, L"Nose", Vector2(0, 5), 10, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.PositionTo(62, L"Nose", Vector2(0, 6.964f), 10, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.PositionTo(72, L"Nose", Vector2(0, 5.981f), 10, EaseType::EaseInOut));
+
+        clip.AddKeyFrame(clip.RotationTo(5, L"HairF_SideL", -3, 36.875f, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.RotationTo(41.875f, L"HairF_SideL", 5, 22.625f, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.RotationTo(64.5f, L"HairF_SideL", 2, 11, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.RotationTo(75.5f, L"HairF_SideL", 3, 11, EaseType::EaseInOut));
+
+        clip.AddKeyFrame(clip.RotationTo(5, L"HairF_SideR", 3, 36.875f, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.RotationTo(41.875f, L"HairF_SideR", 0, 22.625f, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.RotationTo(64.5f, L"HairF_SideR", 1, 11, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.RotationTo(75.5f, L"HairF_SideR", 0, 11, EaseType::EaseInOut));
+
+        clip.AddKeyFrame(clip.RotationTo(0, L"HairF_Bang", 9, 35, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.RotationTo(35, L"HairF_Bang", -6, 19, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.RotationTo(54, L"HairF_Bang", 3, 16.4453f, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.RotationTo(70.4453f, L"HairF_Bang", 0, 16.5547f, EaseType::EaseInOut));
+
+        clip.AddKeyFrame(clip.ScaleTo(0, L"HairF", Vector2(1, 0.86f), 35, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.ScaleTo(35, L"HairF", Vector2(1, 1.08f), 22.625f, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.ScaleTo(57.625f, L"HairF", Vector2(1, 1.05f), 11, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.ScaleTo(68.625f, L"HairF", Vector2(1, 1.06f), 11, EaseType::EaseInOut));
+
+        clip.AddKeyFrame(clip.RotationTo(5, L"HairSideL_1", -9, 39.625f, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.RotationTo(44.625f, L"HairSideL_1", 2, 22.625f, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.RotationTo(67.25f, L"HairSideL_1", -1, 11, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.RotationTo(78.25f, L"HairSideL_1", 1, 11, EaseType::EaseInOut));
+
+        clip.AddKeyFrame(clip.RotationTo(5, L"HairSideL_2", -9, 44.375f, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.RotationTo(49.375f, L"HairSideL_2", 2, 20.625f, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.RotationTo(70, L"HairSideL_2", -1, 11, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.RotationTo(81, L"HairSideL_2", 1, 11, EaseType::EaseInOut));
+
+        clip.AddKeyFrame(clip.RotationTo(5, L"HairSideR_1", 4, 39.625f, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.RotationTo(44.625f, L"HairSideR_1", 0, 22.625f, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.RotationTo(67.25f, L"HairSideR_1", 2, 11, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.RotationTo(78.25f, L"HairSideR_1", 0, 11, EaseType::EaseInOut));
+
+        clip.AddKeyFrame(clip.RotationTo(5, L"HairSideR_2", 5, 44.375f, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.RotationTo(49.375f, L"HairSideR_2", 0, 20.625f, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.RotationTo(70, L"HairSideR_2", 2, 11, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.RotationTo(81, L"HairSideR_2", 0, 11, EaseType::EaseInOut));
+
+        clip.AddKeyFrame(clip.PositionTo(35, L"Face", Vector2(0, 10), 17, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.PositionTo(52, L"Face", Vector2(0, 7), 10, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.PositionTo(62, L"Face", Vector2(0, 7.982f), 10, EaseType::EaseInOut));
+
+        clip.AddKeyFrame(clip.PositionTo(0, L"Body", Vector2(0, -13), 35, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.PositionTo(35, L"Body", Vector2(36, 42), 17, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.PositionTo(52, L"Body", Vector2(35, 41), 10, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.PositionTo(62, L"Body", Vector2(33, 43), 10, EaseType::EaseInOut));
+
+        clip.AddKeyFrame(clip.RotationTo(0, L"Body", 2, 35, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.RotationTo(35, L"Body", -7, 17, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.RotationTo(52, L"Body", -6.7f, 10, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.RotationTo(62, L"Body", -7, 10, EaseType::EaseInOut));
+
+        clip.AddKeyFrame(clip.RotationTo(0, L"Hair_AhogeL", -15, 35, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.RotationTo(35, L"Hair_AhogeL", 15, 17, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.RotationTo(52, L"Hair_AhogeL", 7.5f, 10, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.RotationTo(62, L"Hair_AhogeL", 0, 10, EaseType::EaseInOut));
+
+        clip.AddKeyFrame(clip.RotationTo(0, L"Hair_AhogeR", 12, 35, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.RotationTo(35, L"Hair_AhogeR", -12, 17, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.RotationTo(52, L"Hair_AhogeR", -6, 10, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.RotationTo(62, L"Hair_AhogeR", 0, 10, EaseType::EaseInOut));
+
+        clip.AddKeyFrame(clip.RotationTo(0, L"HairB_HeadL", -2, 42, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.RotationTo(42, L"HairB_HeadL", 0, 26, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.RotationTo(68, L"HairB_HeadL", -1, 13, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.RotationTo(81, L"HairB_HeadL", 0.3f, 12, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.RotationTo(93, L"HairB_HeadL", 0, 12, EaseType::EaseInOut));
+
+        clip.AddKeyFrame(clip.RotationTo(0, L"HairB_HeadR", 2, 42, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.RotationTo(42, L"HairB_HeadR", 0, 26, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.RotationTo(68, L"HairB_HeadR", 1, 13, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.RotationTo(81, L"HairB_HeadR", -0.3f, 12, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.RotationTo(93, L"HairB_HeadR", 0, 12, EaseType::EaseInOut));
+
+        clip.AddKeyFrame(clip.RotationTo(0, L"HairB_Head_SideTuftL", -4, 42, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.RotationTo(42, L"HairB_Head_SideTuftL", 2, 26, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.RotationTo(68, L"HairB_Head_SideTuftL", -0.5f, 13, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.RotationTo(81, L"HairB_Head_SideTuftL", 0.2f, 12, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.RotationTo(93, L"HairB_Head_SideTuftL", 0, 12, EaseType::EaseInOut));
+
+        clip.AddKeyFrame(clip.RotationTo(0, L"HairB_Head_SideTuftR", 4, 42, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.RotationTo(42, L"HairB_Head_SideTuftR", -2, 26, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.RotationTo(68, L"HairB_Head_SideTuftR", 0.5f, 13, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.RotationTo(81, L"HairB_Head_SideTuftR", -0.2f, 12, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.RotationTo(93, L"HairB_Head_SideTuftR", 0, 12, EaseType::EaseInOut));
+
+        clip.AddKeyFrame(clip.RotationTo(0, L"HairBL", -1, 42, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.RotationTo(42, L"HairBL", 3, 25.9473f, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.RotationTo(67.9473f, L"HairBL", 0, 12.7715f, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.RotationTo(80.7188f, L"HairBL", 2, 12.7714f, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.RotationTo(93.4902f, L"HairBL", 1.27913f, 11.5098f, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.RotationTo(105, L"HairBL", 1.54688f, 12, EaseType::EaseInOut));
+
+        clip.AddKeyFrame(clip.RotationTo(0, L"HairBR", 1, 42, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.RotationTo(42, L"HairBR", -1, 25.9473f, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.RotationTo(67.9473f, L"HairBR", 1, 12.7715f, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.RotationTo(80.7188f, L"HairBR", 0, 12.7714f, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.RotationTo(93.4902f, L"HairBR", 0.360436f, 11.5098f, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.RotationTo(105, L"HairBR", 0.226562f, 12, EaseType::EaseInOut));
+
+        clip.AddKeyFrame(clip.PositionTo(0, L"EyeL_Brow", Vector2(0, -7), 45, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.PositionTo(45, L"EyeL_Brow", Vector2(0, 8), 5, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.PositionTo(50, L"EyeL_Brow", Vector2(0, 0), 16, EaseType::EaseInOut));
+
+        clip.AddKeyFrame(clip.Sprite(50, L"EyeL_Pupil", 1));
+        clip.AddKeyFrame(clip.Sprite(50, L"EyeL_Lid", 1));
+        clip.AddKeyFrame(clip.Sprite(0, L"EyeL_Pupil", 0));
+        clip.AddKeyFrame(clip.Sprite(0, L"EyeL_Lid", 0));
+        clip.AddKeyFrame(clip.PositionTo(0, L"EyeL_Lid", Vector2(0, -5), 45, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.PositionTo(45, L"EyeL_Lid", Vector2(0, 16), 5, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.PositionTo(50, L"EyeL_Lid", Vector2(0, 0), 16, EaseType::EaseInOut));
+
+        clip.AddKeyFrame(clip.ScaleTo(0, L"EyeL_White", Vector2(1, 1.24f), 45, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.ScaleTo(45, L"EyeL_White", Vector2(1, 0.2f), 5, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.ScaleTo(50, L"EyeL_White", Vector2(1, 1.02f), 16, EaseType::EaseInOut));
+
+        clip.AddKeyFrame(clip.PositionTo(0, L"EyeR_Brow", Vector2(0, -7), 45, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.PositionTo(45, L"EyeR_Brow", Vector2(0, 8), 5, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.PositionTo(50, L"EyeR_Brow", Vector2(0, 0), 16, EaseType::EaseInOut));
+
+        clip.AddKeyFrame(clip.Sprite(50, L"EyeR_Pupil", 1));
+        clip.AddKeyFrame(clip.Sprite(50, L"EyeR_Lid", 1));
+        clip.AddKeyFrame(clip.Sprite(0, L"EyeR_Pupil", 0));
+        clip.AddKeyFrame(clip.Sprite(0, L"EyeR_Lid", 0));
+        clip.AddKeyFrame(clip.PositionTo(0, L"EyeR_Lid", Vector2(0, -5), 45, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.PositionTo(45, L"EyeR_Lid", Vector2(0, 16), 5, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.PositionTo(50, L"EyeR_Lid", Vector2(0, 0), 16, EaseType::EaseInOut));
+
+        clip.AddKeyFrame(clip.ScaleTo(0, L"EyeR_White", Vector2(1, 1.24f), 45, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.ScaleTo(45, L"EyeR_White", Vector2(1, 0.2f), 5, EaseType::EaseInOut));
+        clip.AddKeyFrame(clip.ScaleTo(50, L"EyeR_White", Vector2(1, 1.02f), 16, EaseType::EaseInOut));
+
+        return clip;
+    }
+
     AnimationClip CoffiaCharacterFactory::CreateGreetingClip()
     {
         AnimationClip clip(L"CoffiaGreeting");
@@ -305,11 +476,11 @@ namespace WizardRaid
         clip.AddKeyFrame(AnimationClip::Rotation(40.0f, L"ArmL", -40.0f, -22.5f, 20.0f, EaseType::EaseInOut));
         clip.AddKeyFrame(AnimationClip::Rotation(60.0f, L"ArmL", -22.5f, -33.75f, 20.0f, EaseType::EaseInOut));
         clip.AddKeyFrame(AnimationClip::Rotation(110.0f, L"ArmL", -33.75f, -123.0f, 40.0f, EaseType::EaseInOut));
-        clip.AddKeyFrame(AnimationClip::Position(0.0f, L"ArmL", Vector2(-175.0f, 200.0f), Vector2(-155.0f, 183.0f), 20.0f, EaseType::EaseInOut));
-        clip.AddKeyFrame(AnimationClip::Position(20.0f, L"ArmL", Vector2(-155.0f, 183.0f), Vector2(-166.0f, 200.0f), 20.0f, EaseType::EaseInOut));
-        clip.AddKeyFrame(AnimationClip::Position(40.0f, L"ArmL", Vector2(-166.0f, 200.0f), Vector2(-158.3f, 192.0f), 20.0f, EaseType::EaseInOut));
-        clip.AddKeyFrame(AnimationClip::Position(60.0f, L"ArmL", Vector2(-158.3f, 192.0f), Vector2(-162.7f, 199.3f), 20.0f, EaseType::EaseInOut));
-        clip.AddKeyFrame(AnimationClip::Position(110.0f, L"ArmL", Vector2(-162.7f, 199.3f), Vector2(-160.0f, 216.5f), 40.0f, EaseType::EaseInOut));
+        clip.AddKeyFrame(AnimationClip::Position(0.0f, L"ArmL", Vector2(0.0f, 0.0f), Vector2(20.0f, -17.0f), 20.0f, EaseType::EaseInOut));
+        clip.AddKeyFrame(AnimationClip::Position(20.0f, L"ArmL", Vector2(20.0f, -17.0f), Vector2(9.0f, 0.0f), 20.0f, EaseType::EaseInOut));
+        clip.AddKeyFrame(AnimationClip::Position(40.0f, L"ArmL", Vector2(9.0f, 0.0f), Vector2(16.7f, -8.0f), 20.0f, EaseType::EaseInOut));
+        clip.AddKeyFrame(AnimationClip::Position(60.0f, L"ArmL", Vector2(16.7f, -8.0f), Vector2(12.3f, -0.7f), 20.0f, EaseType::EaseInOut));
+        clip.AddKeyFrame(AnimationClip::Position(110.0f, L"ArmL", Vector2(12.3f, -0.7f), Vector2(15.0f, 16.5f), 40.0f, EaseType::EaseInOut));
 
         clip.AddKeyFrame(AnimationClip::Rotation(0.0f, L"HandL", 0.0f, 20.0f, 20.0f, EaseType::EaseInOut));
         clip.AddKeyFrame(AnimationClip::Rotation(20.0f, L"HandL", 20.0f, -10.0f, 20.0f, EaseType::EaseInOut));
@@ -317,9 +488,9 @@ namespace WizardRaid
         clip.AddKeyFrame(AnimationClip::Rotation(60.0f, L"HandL", 5.0f, -2.0f, 20.0f, EaseType::EaseInOut));
         clip.AddKeyFrame(AnimationClip::Rotation(110.0f, L"HandL", -2.0f, 7.0f, 40.0f, EaseType::EaseInOut));
 
-        clip.AddKeyFrame(AnimationClip::Position(0.0f, L"Body", Vector2(0.0f, 220.0f), Vector2(0.0f, 206.0f), 20.0f, EaseType::EaseInOut));
-        clip.AddKeyFrame(AnimationClip::Position(20.0f, L"Body", Vector2(0.0f, 206.0f), Vector2(0.0f, 224.0f), 40.0f, EaseType::EaseInOut));
-        clip.AddKeyFrame(AnimationClip::Position(60.0f, L"Body", Vector2(0.0f, 224.0f), Vector2(0.0f, 220.0f), 20.0f, EaseType::EaseInOut));
+        clip.AddKeyFrame(AnimationClip::Position(0.0f, L"Body", Vector2(0.0f, 0.0f), Vector2(0.0f, -14.0f), 20.0f, EaseType::EaseInOut));
+        clip.AddKeyFrame(AnimationClip::Position(20.0f, L"Body", Vector2(0.0f, -14.0f), Vector2(0.0f, 4.0f), 40.0f, EaseType::EaseInOut));
+        clip.AddKeyFrame(AnimationClip::Position(60.0f, L"Body", Vector2(0.0f, 4.0f), Vector2(0.0f, 0.0f), 20.0f, EaseType::EaseInOut));
         clip.AddKeyFrame(AnimationClip::Rotation(0.0f, L"Body", 0.0f, -0.5f, 20.0f, EaseType::EaseInOut));
         clip.AddKeyFrame(AnimationClip::Rotation(20.0f, L"Body", -0.5f, 0.3f, 20.0f, EaseType::EaseInOut));
         clip.AddKeyFrame(AnimationClip::Rotation(40.0f, L"Body", 0.3f, 0.0f, 20.0f, EaseType::EaseInOut));

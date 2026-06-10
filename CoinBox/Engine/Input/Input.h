@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 #include <Windows.h>
+#include "Vector2.h"
 
 enum class MouseButton
 {
@@ -9,12 +10,6 @@ enum class MouseButton
     Middle,
     X1,
     X2
-};
-
-struct MousePosition
-{
-    float x = 0.0f;
-    float y = 0.0f;
 };
 
 // 게임 전체에서 공유하는 입력 상태입니다.
@@ -43,7 +38,10 @@ public:
     // 마우스 버튼을 뗀 첫 프레임에만 true입니다.
     static bool IsMouseUp(MouseButton button);
 
-    static MousePosition GetMousePosition();
+    static Vector2 GetMousePosition();
+    static Vector2 GetMousePositionInScreen();
+    static Vector2 GetMousePositionInScreenCenter();
+    static Vector2 GetMousePositionNormalized();
 
 private:
     static int ToVirtualKey(MouseButton button);
@@ -52,5 +50,5 @@ private:
     static HWND m_hwnd;
     static bool m_currentKeys[256];
     static bool m_previousKeys[256];
-    static MousePosition m_mousePosition;
+    static Vector2 m_mousePosition;
 };

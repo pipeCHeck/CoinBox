@@ -4,7 +4,7 @@
 
 namespace WizardRaid {
 
-	class PlayerCtrl : public Component {
+	class CoffiaAniCtrl : public Component {
 	protected:
 		void Start() override;
 		void Update(float deltaTime) override;

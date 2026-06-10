@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Component.h"
-#include "Transform.h"
+#include "Vector2.h"
 
 #include <string>
 #include <vector>
@@ -37,6 +37,7 @@ struct KeyFrame
     EaseType easeType = EaseType::Linear;
     // *To 헬퍼에서 사용합니다. 재생 시간이 이 키에 도달했을 때 대상의 현재 값을 시작값으로 잡습니다.
     bool useCurrentAsStartValue = false;
+    bool useDeltaAsEndValue = false;
 
     bool hasStarted = false;
 };
@@ -69,6 +70,9 @@ public:
     static KeyFrame PositionTo(float startFrame, const std::wstring& targetName, const Vector2& endValue, float durationFrames, EaseType easeType);
     static KeyFrame RotationTo(float startFrame, const std::wstring& targetName, float endAngle, float durationFrames, EaseType easeType);
     static KeyFrame ScaleTo(float startFrame, const std::wstring& targetName, const Vector2& endScale, float durationFrames, EaseType easeType);
+    static KeyFrame PositionBy(float startFrame, const std::wstring& targetName, const Vector2& deltaValue, float durationFrames, EaseType easeType);
+    static KeyFrame RotationBy(float startFrame, const std::wstring& targetName, float deltaAngle, float durationFrames, EaseType easeType);
+    static KeyFrame ScaleBy(float startFrame, const std::wstring& targetName, const Vector2& deltaScale, float durationFrames, EaseType easeType);
 
     static KeyFrame Sprite(float startFrame, const std::wstring& targetName, int frameIndex);
     static KeyFrame Active(float startFrame, const std::wstring& targetName, bool active);
@@ -93,6 +97,7 @@ public:
 private:
     float ApplyEase(float t, EaseType easeType) const;
     void ResetRuntimeState(AnimationClip& clip);
+    void InitializeKeyFrameStartValue(KeyFrame& keyFrame);
     void ApplyKeyFrame(KeyFrame& keyFrame, float t);
 
     std::vector<AnimationClip> m_clips;

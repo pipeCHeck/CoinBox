@@ -69,7 +69,13 @@
     <ClInclude Include="Engine\Core\GameObject.h">
       <Filter>Engine\Core</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\Core\Screen.h">
+      <Filter>Engine\Core</Filter>
+    </ClInclude>
     <ClInclude Include="Engine\Core\Transform.h">
+      <Filter>Engine\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Core\Vector2.h">
       <Filter>Engine\Core</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Scene\Scene.h">
@@ -97,6 +103,9 @@
       <Filter>Engine</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Graphics\SpriteRenderer.h">
+      <Filter>Engine\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Graphics\Camera.h">
       <Filter>Engine\Components</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Graphics\SpriteRig.h">
@@ -131,6 +140,9 @@
     <ClCompile Include="Engine\Core\GameObject.cpp">
       <Filter>Engine\Core</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Core\Screen.cpp">
+      <Filter>Engine\Core</Filter>
+    </ClCompile>
     <ClCompile Include="Engine\Scene\Scene.cpp">
       <Filter>Engine\Scene</Filter>
     </ClCompile>
@@ -157,6 +169,9 @@
     </ClCompile>
     <ClCompile Include="Engine\Graphics\D2DGameEngine.cpp">
       <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Graphics\Camera.cpp">
+      <Filter>Engine\Components</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Graphics\SpriteRenderer.cpp">
       <Filter>Engine\Components</Filter>

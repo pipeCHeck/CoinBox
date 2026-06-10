@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 #include <d2d1_1.h>
+#include "Vector2.h"
 
 class GameObject;
 
@@ -29,6 +30,45 @@ public:
 
     // 같은 GameObject 트리 안에서 렌더 순서를 정합니다. 값이 클수록 나중에 그립니다.
     virtual int GetRenderOrder() const { return 0; }
+
+protected:
+    static float Clamp01(float value)
+    {
+        if (value < 0.0f)
+        {
+            return 0.0f;
+        }
+
+        if (value > 1.0f)
+        {
+            return 1.0f;
+        }
+
+        return value;
+    }
+
+    static float EaseInOut(float t)
+    {
+        t = Clamp01(t);
+        return t * t * (3.0f - 2.0f * t);
+    }
+
+    static float Lerp(float start, float end, float t)
+    {
+        t = Clamp01(t);
+        return start + (end - start) * t;
+    }
+
+    static Vector2 Lerp(const Vector2& start, const Vector2& end, float t)
+    {
+        t = Clamp01(t);
+        return start + (end - start) * t;
+    }
+
+    static Vector2 SmoothFollow(const Vector2& current, const Vector2& target, float speed, float deltaTime)
+    {
+        return Lerp(current, target, speed * deltaTime);
+    }
 
 private:
     friend class GameObject;

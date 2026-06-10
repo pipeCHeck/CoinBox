@@ -37,6 +37,8 @@ public:
     // 컴포넌트에서는 GetOwner()->GetTransform()으로 위치/회전/크기를 읽고 바꿉니다.
     Transform& GetTransform() { return *m_transform; }
     const Transform& GetTransform() const { return *m_transform; }
+    Transform& GetAniTransform() { return m_aniTransform; }
+    const Transform& GetAniTransform() const { return m_aniTransform; }
     Transform GetWorldTransform() const;
 
     // Scene이 호출합니다. 직접 호출할 일은 거의 없습니다.
@@ -44,6 +46,15 @@ public:
     void Start();
     void Update(float deltaTime);
     void Render(ID2D1DeviceContext* d2dContext);
+
+    struct RenderEntry
+    {
+        int order = 0;
+        size_t sequence = 0;
+        Component* component = nullptr;
+    };
+
+    void CollectRenderEntries(std::vector<RenderEntry>& entries, size_t& sequence);
 
     // 이 오브젝트에 새 컴포넌트를 붙입니다.
     // 사용 예: object->AddComponent<SpriteRenderer>(image);
@@ -87,17 +98,28 @@ public:
         return nullptr;
     }
 
-private:
-    struct RenderEntry
+    template <typename TComponent>
+    TComponent* FindComponentInChildren() const
     {
-        int order = 0;
-        size_t sequence = 0;
-        Component* component = nullptr;
-    };
+        if (TComponent* component = GetComponent<TComponent>())
+        {
+            return component;
+        }
 
-    void CollectRenderEntries(std::vector<RenderEntry>& entries, size_t& sequence);
+        for (const auto& child : m_children)
+        {
+            if (TComponent* component = child->FindComponentInChildren<TComponent>())
+            {
+                return component;
+            }
+        }
 
+        return nullptr;
+    }
+
+private:
     Transform* m_transform = nullptr;
+    Transform m_aniTransform;
     GameObject* m_parent = nullptr;
     std::wstring m_name;
     bool m_active = true;

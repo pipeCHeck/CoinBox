@@ -5,6 +5,11 @@
 
 namespace WizardRaid {
 
+	void PlayerCtrl::Start() 
+	{
+		animator = GetOwner()->GetComponent<Animator>();
+	}
+
 	void PlayerCtrl::Update(float deltaTime)
 	{
 		Transform& transform = GetOwner()->GetTransform();
@@ -21,6 +26,13 @@ namespace WizardRaid {
 		}
 		if (Input::IsKey(VK_UP)) {
 			transform.position.y -= speed * deltaTime;
+		}
+
+		if (Input::IsKeyDown('Z')) {
+			animator->Play(L"ChinRest_Clip");
+		}
+		if (Input::IsKeyDown('X')) {
+			animator->Play(L"Greeting_SmilingEyes_Clip");
 		}
 	}
 }

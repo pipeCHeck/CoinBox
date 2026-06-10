@@ -16,6 +16,7 @@ namespace WizardRaid
 
         static AnimationClip CreateIdleClip();
         static AnimationClip Greeting_SmilingEyes_Clip();
+        static AnimationClip ChinRest_Clip();
         static AnimationClip CreateGreetingClip();
     };
 }

@@ -2,6 +2,7 @@
 #include "D2DGameEngine.h"
 #include "Input.h"
 #include "ResourceManager.h"
+#include "Screen.h"
 
 
 #include "Demo/DemoScenes.h"
@@ -43,6 +44,7 @@ HRESULT D2DGameEngine::Initialize(HWND hwnd)
     m_height = clientRect.bottom > clientRect.top
         ? static_cast<UINT>(clientRect.bottom - clientRect.top)
         : 1;
+    Screen::SetSize(m_width, m_height);
     Input::Initialize(m_hwnd);
 
     HRESULT hr = CreateDeviceIndependentResources();
@@ -108,6 +110,7 @@ void D2DGameEngine::Resize(UINT width, UINT height)
 
     m_width = width;
     m_height = height;
+    Screen::SetSize(m_width, m_height);
 
     if (!m_swapChain)
     {

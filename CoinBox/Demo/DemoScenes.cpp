@@ -73,7 +73,7 @@ namespace DemoGame
 
             if (Input::IsMouseDown(MouseButton::Left))
             {
-                const MousePosition mouse = Input::GetMousePosition();
+                const Vector2 mouse = Input::GetMousePosition();
                 transform.position.x = mouse.x;
                 transform.position.y = mouse.y;
             }

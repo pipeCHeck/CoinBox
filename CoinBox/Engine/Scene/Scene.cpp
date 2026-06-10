@@ -1,4 +1,8 @@
-﻿#include "Scene.h"
+#include "Scene.h"
+
+#include "Camera.h"
+
+#include <algorithm>
 
 void Scene::Init()
 {
@@ -7,10 +11,8 @@ void Scene::Init()
         return;
     }
 
-    // 씬이 자기 오브젝트를 만들 기회를 먼저 줍니다.
     OnInit();
 
-    // 그 다음 씬 안의 모든 오브젝트와 컴포넌트를 초기화합니다.
     for (const auto& object : m_objects)
     {
         object->Init();
@@ -38,10 +40,8 @@ void Scene::Update(float deltaTime)
 {
     Init();
 
-    // 씬 자체 로직을 먼저 갱신합니다.
     OnUpdate(deltaTime);
 
-    // 그 다음 씬 안의 오브젝트들이 자기 컴포넌트를 갱신합니다.
     for (const auto& object : m_objects)
     {
         object->Update(deltaTime);
@@ -52,13 +52,59 @@ void Scene::Render(ID2D1DeviceContext* d2dContext)
 {
     Init();
 
-    // 씬 배경이나 씬 전용 렌더링이 필요하면 여기서 처리합니다.
     OnRender(d2dContext);
 
-    // 그 다음 오브젝트들이 자기 렌더 컴포넌트를 그립니다.
+    D2D1_MATRIX_3X2_F previousTransform = D2D1::Matrix3x2F::Identity();
+    bool appliedCamera = false;
+
+    if (d2dContext)
+    {
+        for (const auto& object : m_objects)
+        {
+            Camera* camera = object->FindComponentInChildren<Camera>();
+            if (!camera)
+            {
+                continue;
+            }
+
+            d2dContext->GetTransform(&previousTransform);
+            d2dContext->SetTransform(camera->GetViewMatrix(d2dContext->GetSize()) * previousTransform);
+            appliedCamera = true;
+            break;
+        }
+    }
+
+    std::vector<GameObject::RenderEntry> renderEntries;
+    size_t sequence = 0;
+
     for (const auto& object : m_objects)
     {
-        object->Render(d2dContext);
+        object->Init();
+        object->CollectRenderEntries(renderEntries, sequence);
+    }
+
+    std::stable_sort(renderEntries.begin(), renderEntries.end(),
+        [](const GameObject::RenderEntry& left, const GameObject::RenderEntry& right)
+        {
+            if (left.order != right.order)
+            {
+                return left.order < right.order;
+            }
+
+            return left.sequence < right.sequence;
+        });
+
+    for (const GameObject::RenderEntry& entry : renderEntries)
+    {
+        if (entry.component)
+        {
+            entry.component->Render(d2dContext);
+        }
+    }
+
+    if (appliedCamera)
+    {
+        d2dContext->SetTransform(previousTransform);
     }
 }
 
@@ -67,7 +113,6 @@ GameObject* Scene::AddObject(std::unique_ptr<GameObject> object)
     GameObject* rawObject = object.get();
     m_objects.push_back(std::move(object));
 
-    // 이미 실행 중인 씬에 오브젝트를 나중에 추가해도 바로 초기화합니다.
     if (rawObject && m_initialized)
     {
         rawObject->Init();

@@ -136,11 +136,16 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="BackScene.h" />
+    <ClInclude Include="CameraController.h" />
+    <ClInclude Include="CoffiaAniCtrl.h" />
     <ClInclude Include="CoinBox.h" />
     <ClInclude Include="Demo\DemoScenes.h" />
     <ClInclude Include="Engine\Core\Component.h" />
     <ClInclude Include="Engine\Core\GameObject.h" />
+    <ClInclude Include="Engine\Core\Screen.h" />
     <ClInclude Include="Engine\Core\Transform.h" />
+    <ClInclude Include="Engine\Core\Vector2.h" />
+    <ClInclude Include="Engine\Graphics\Camera.h" />
     <ClInclude Include="Engine\Graphics\D2DGameEngine.h" />
     <ClInclude Include="Engine\Graphics\SpriteRig.h" />
     <ClInclude Include="Engine\Graphics\SpriteRenderer.h" />
@@ -158,10 +163,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BackScene.cpp" />
+    <ClCompile Include="CameraController.cpp" />
+    <ClCompile Include="CoffiaAniCtrl.cpp" />
     <ClCompile Include="CoinBox.cpp" />
     <ClCompile Include="Demo\DemoScenes.cpp" />
     <ClCompile Include="Engine\Core\Component.cpp" />
     <ClCompile Include="Engine\Core\GameObject.cpp" />
+    <ClCompile Include="Engine\Core\Screen.cpp" />
+    <ClCompile Include="Engine\Graphics\Camera.cpp" />
     <ClCompile Include="Engine\Graphics\D2DGameEngine.cpp" />
     <ClCompile Include="Engine\Graphics\SpriteRig.cpp" />
     <ClCompile Include="Engine\Graphics\SpriteRenderer.cpp" />

@@ -101,6 +101,30 @@ KeyFrame AnimationClip::ScaleTo(float startFrame, const std::wstring& targetName
     return keyFrame;
 }
 
+KeyFrame AnimationClip::PositionBy(float startFrame, const std::wstring& targetName, const Vector2& deltaValue, float durationFrames, EaseType easeType)
+{
+    KeyFrame keyFrame = Position(startFrame, targetName, Vector2(0.0f, 0.0f), deltaValue, durationFrames, easeType);
+    keyFrame.useCurrentAsStartValue = true;
+    keyFrame.useDeltaAsEndValue = true;
+    return keyFrame;
+}
+
+KeyFrame AnimationClip::RotationBy(float startFrame, const std::wstring& targetName, float deltaAngle, float durationFrames, EaseType easeType)
+{
+    KeyFrame keyFrame = Rotation(startFrame, targetName, 0.0f, deltaAngle, durationFrames, easeType);
+    keyFrame.useCurrentAsStartValue = true;
+    keyFrame.useDeltaAsEndValue = true;
+    return keyFrame;
+}
+
+KeyFrame AnimationClip::ScaleBy(float startFrame, const std::wstring& targetName, const Vector2& deltaScale, float durationFrames, EaseType easeType)
+{
+    KeyFrame keyFrame = Scale(startFrame, targetName, Vector2(0.0f, 0.0f), deltaScale, durationFrames, easeType);
+    keyFrame.useCurrentAsStartValue = true;
+    keyFrame.useDeltaAsEndValue = true;
+    return keyFrame;
+}
+
 KeyFrame AnimationClip::Sprite(float startFrame, const std::wstring& targetName, int frameIndex)
 {
     KeyFrame keyFrame;
@@ -205,6 +229,7 @@ void Animator::Update(float deltaTime)
             if (m_time >= keyFrame.startTime && !keyFrame.hasStarted)
             {
                 keyFrame.hasStarted = true;
+                InitializeKeyFrameStartValue(keyFrame);
                 ApplyKeyFrame(keyFrame, 1.0f);
             }
 
@@ -229,7 +254,7 @@ void Animator::Update(float deltaTime)
                     continue;
                 }
 
-                const Transform& transform = target->GetTransform();
+                const Transform& transform = target->GetAniTransform();
                 if (keyFrame.type == KeyFrameType::Position)
                 {
                     keyFrame.startValue = transform.position;
@@ -284,6 +309,34 @@ void Animator::ResetRuntimeState(AnimationClip& clip)
     }
 }
 
+void Animator::InitializeKeyFrameStartValue(KeyFrame& keyFrame)
+{
+    if (!keyFrame.useCurrentAsStartValue)
+    {
+        return;
+    }
+
+    GameObject* target = GetOwner() ? GetOwner()->FindChild(keyFrame.targetName) : nullptr;
+    if (!target)
+    {
+        return;
+    }
+
+    const Transform& transform = target->GetAniTransform();
+    if (keyFrame.type == KeyFrameType::Position)
+    {
+        keyFrame.startValue = transform.position;
+    }
+    else if (keyFrame.type == KeyFrameType::Rotation)
+    {
+        keyFrame.startValue = Vector2(transform.rotation, 0.0f);
+    }
+    else if (keyFrame.type == KeyFrameType::Scale)
+    {
+        keyFrame.startValue = transform.scale;
+    }
+}
+
 void Animator::ApplyKeyFrame(KeyFrame& keyFrame, float t)
 {
     GameObject* target = GetOwner() ? GetOwner()->FindChild(keyFrame.targetName) : nullptr;
@@ -292,18 +345,24 @@ void Animator::ApplyKeyFrame(KeyFrame& keyFrame, float t)
         return;
     }
 
-    Transform& transform = target->GetTransform();
+    Transform& transform = target->GetAniTransform();
 
     switch (keyFrame.type)
     {
     case KeyFrameType::Position:
-        transform.position = keyFrame.startValue + (keyFrame.endValue - keyFrame.startValue) * t;
+        transform.position = keyFrame.useDeltaAsEndValue
+            ? keyFrame.startValue + keyFrame.endValue * t
+            : keyFrame.startValue + (keyFrame.endValue - keyFrame.startValue) * t;
         break;
     case KeyFrameType::Rotation:
-        transform.rotation = keyFrame.startValue.x + (keyFrame.endValue.x - keyFrame.startValue.x) * t;
+        transform.rotation = keyFrame.useDeltaAsEndValue
+            ? keyFrame.startValue.x + keyFrame.endValue.x * t
+            : keyFrame.startValue.x + (keyFrame.endValue.x - keyFrame.startValue.x) * t;
         break;
     case KeyFrameType::Scale:
-        transform.scale = keyFrame.startValue + (keyFrame.endValue - keyFrame.startValue) * t;
+        transform.scale = keyFrame.useDeltaAsEndValue
+            ? keyFrame.startValue + keyFrame.endValue * t
+            : keyFrame.startValue + (keyFrame.endValue - keyFrame.startValue) * t;
         break;
     case KeyFrameType::Sprite:
         if (SpriteRenderer* renderer = target->GetComponent<SpriteRenderer>())
