@@ -184,6 +184,40 @@ void GameObject::Render(ID2D1DeviceContext* d2dContext)
     }
 }
 
+void GameObject::DispatchCollisionEnter2D(const Collision2D& collision)
+{
+    if (!m_active)
+    {
+        return;
+    }
+
+    for (const auto& component : m_components)
+    {
+        component->OnCollisionEnter2D(collision);
+    }
+}
+
+void GameObject::DispatchCollisionStay2D(const Collision2D& collision)
+{
+    if (!m_active)
+    {
+        return;
+    }
+
+    for (const auto& component : m_components)
+    {
+        component->OnCollisionStay2D(collision);
+    }
+}
+
+void GameObject::DispatchCollisionExit2D(const Collision2D& collision)
+{
+    for (const auto& component : m_components)
+    {
+        component->OnCollisionExit2D(collision);
+    }
+}
+
 void GameObject::CollectRenderEntries(std::vector<RenderEntry>& entries, size_t& sequence)
 {
     if (!m_active)

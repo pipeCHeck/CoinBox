@@ -1,6 +1,7 @@
 #include "Scene.h"
 
 #include "Camera.h"
+#include "Physics2D.h"
 
 #include <algorithm>
 
@@ -46,6 +47,8 @@ void Scene::Update(float deltaTime)
     {
         object->Update(deltaTime);
     }
+
+    Physics2D::Step(deltaTime);
 }
 
 void Scene::Render(ID2D1DeviceContext* d2dContext)

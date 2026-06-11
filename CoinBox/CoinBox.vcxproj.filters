@@ -58,6 +58,9 @@
     <Filter Include="Engine\Animation">
       <UniqueIdentifier>{35fb0baa-6015-4b04-a8ec-5d257c56ed3f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Physics">
+      <UniqueIdentifier>{6b4ca51a-3e09-46c2-8a39-0c63af6db964}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Game\Characters">
       <UniqueIdentifier>{de60eb79-e752-45b1-afcf-ce576b0ce390}</UniqueIdentifier>
     </Filter>
@@ -69,7 +72,16 @@
     <ClInclude Include="Engine\Core\GameObject.h">
       <Filter>Engine\Core</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\Core\Prefab.h">
+      <Filter>Engine\Core</Filter>
+    </ClInclude>
     <ClInclude Include="Engine\Core\Screen.h">
+      <Filter>Engine\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Core\ShakeEffect.h">
+      <Filter>Engine\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Core\Spawner.h">
       <Filter>Engine\Core</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Core\Transform.h">
@@ -77,6 +89,24 @@
     </ClInclude>
     <ClInclude Include="Engine\Core\Vector2.h">
       <Filter>Engine\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Physics\BoxCollider2D.h">
+      <Filter>Engine\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Physics\CircleCollider2D.h">
+      <Filter>Engine\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Physics\Collider2D.h">
+      <Filter>Engine\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Physics\Collision2D.h">
+      <Filter>Engine\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Physics\CollisionHandler2D.h">
+      <Filter>Engine\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Physics\Physics2D.h">
+      <Filter>Engine\Physics</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Scene\Scene.h">
       <Filter>Engine\Scene</Filter>
@@ -111,6 +141,9 @@
     <ClInclude Include="Engine\Graphics\SpriteRig.h">
       <Filter>Engine\Components</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\Graphics\TextRenderer.h">
+      <Filter>Engine\Components</Filter>
+    </ClInclude>
     <ClInclude Include="BackScene.h">
       <Filter>Game\Scenes\Background</Filter>
     </ClInclude>
@@ -143,6 +176,27 @@
     <ClCompile Include="Engine\Core\Screen.cpp">
       <Filter>Engine\Core</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Core\ShakeEffect.cpp">
+      <Filter>Engine\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Core\Spawner.cpp">
+      <Filter>Engine\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Physics\BoxCollider2D.cpp">
+      <Filter>Engine\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Physics\CircleCollider2D.cpp">
+      <Filter>Engine\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Physics\Collider2D.cpp">
+      <Filter>Engine\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Physics\CollisionHandler2D.cpp">
+      <Filter>Engine\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Physics\Physics2D.cpp">
+      <Filter>Engine\Physics</Filter>
+    </ClCompile>
     <ClCompile Include="Engine\Scene\Scene.cpp">
       <Filter>Engine\Scene</Filter>
     </ClCompile>
@@ -174,6 +228,9 @@
       <Filter>Engine\Components</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Graphics\SpriteRenderer.cpp">
+      <Filter>Engine\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Graphics\TextRenderer.cpp">
       <Filter>Engine\Components</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Graphics\SpriteRig.cpp">

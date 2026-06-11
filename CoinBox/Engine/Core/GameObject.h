@@ -46,6 +46,9 @@ public:
     void Start();
     void Update(float deltaTime);
     void Render(ID2D1DeviceContext* d2dContext);
+    void DispatchCollisionEnter2D(const Collision2D& collision);
+    void DispatchCollisionStay2D(const Collision2D& collision);
+    void DispatchCollisionExit2D(const Collision2D& collision);
 
     struct RenderEntry
     {
