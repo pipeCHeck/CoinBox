@@ -35,11 +35,15 @@ void Scene::Start()
     {
         object->Start();
     }
+
+    m_started = true;
 }
 
 void Scene::Update(float deltaTime)
 {
     Init();
+
+    m_updating = true;
 
     OnUpdate(deltaTime);
 
@@ -48,7 +52,12 @@ void Scene::Update(float deltaTime)
         object->Update(deltaTime);
     }
 
+    m_updating = false;
+    FlushPendingObjects();
+
     Physics2D::Step(deltaTime);
+
+    CleanupDestroyedObjects();
 }
 
 void Scene::Render(ID2D1DeviceContext* d2dContext)
@@ -114,12 +123,72 @@ void Scene::Render(ID2D1DeviceContext* d2dContext)
 GameObject* Scene::AddObject(std::unique_ptr<GameObject> object)
 {
     GameObject* rawObject = object.get();
-    m_objects.push_back(std::move(object));
 
-    if (rawObject && m_initialized)
+    if (!rawObject)
     {
-        rawObject->Init();
+        return nullptr;
     }
 
+    PrepareObject(rawObject);
+
+    if (m_updating)
+    {
+        m_pendingObjects.push_back(std::move(object));
+        return rawObject;
+    }
+
+    m_objects.push_back(std::move(object));
     return rawObject;
+}
+
+void Scene::PrepareObject(GameObject* object)
+{
+    if (!object)
+    {
+        return;
+    }
+
+    object->m_parent = nullptr;
+    object->SetScene(this);
+
+    if (m_initialized)
+    {
+        object->Init();
+    }
+
+    if (m_started)
+    {
+        object->Start();
+    }
+}
+
+void Scene::FlushPendingObjects()
+{
+    if (m_pendingObjects.empty())
+    {
+        return;
+    }
+
+    for (auto& object : m_pendingObjects)
+    {
+        if (object)
+        {
+            m_objects.push_back(std::move(object));
+        }
+    }
+
+    m_pendingObjects.clear();
+}
+
+void Scene::CleanupDestroyedObjects()
+{
+    m_objects.erase(
+        std::remove_if(
+            m_objects.begin(),
+            m_objects.end(),
+            [](const std::unique_ptr<GameObject>& object)
+            {
+                return object && object->IsDestroyed();
+            }),
+        m_objects.end());
 }

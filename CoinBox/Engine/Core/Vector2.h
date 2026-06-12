@@ -17,9 +17,23 @@ struct Vector2
         return Vector2(x + other.x, y + other.y);
     }
 
+    Vector2& operator+=(const Vector2& other) 
+    {
+        x += other.x;
+        y += other.y;
+        return *this;
+    }
+
     Vector2 operator-(const Vector2& other) const
     {
         return Vector2(x - other.x, y - other.y);
+    }
+
+    Vector2& operator-=(const Vector2& other) 
+    {
+        x -= other.x;
+        y -= other.y;
+        return *this;
     }
 
     Vector2 operator*(const Vector2& other) const
@@ -35,6 +49,27 @@ struct Vector2
     Vector2 operator/(float value) const
     {
         return Vector2(x / value, y / value);
+    }
+
+    float Length() const
+    {
+        return std::sqrt(x * x + y * y);
+    }
+
+    Vector2& Normalize()
+    {
+        float length = Length();
+
+        if (length <= 0.0001f)
+        {
+            x = 0.0f;
+            y = 0.0f;
+            return *this;
+        }
+
+        x /= length;
+        y /= length;
+        return *this;
     }
 };
 

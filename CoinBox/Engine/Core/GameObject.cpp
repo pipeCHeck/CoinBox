@@ -17,6 +17,7 @@ GameObject* GameObject::AddChild(std::unique_ptr<GameObject> child)
 
     GameObject* rawChild = child.get();
     rawChild->m_parent = this;
+    rawChild->SetScene(m_scene);
     m_children.push_back(std::move(child));
 
     if (m_initialized)
@@ -30,6 +31,16 @@ GameObject* GameObject::AddChild(std::unique_ptr<GameObject> child)
     }
 
     return rawChild;
+}
+
+void GameObject::SetScene(Scene* scene)
+{
+    m_scene = scene;
+
+    for (const auto& child : m_children)
+    {
+        child->SetScene(scene);
+    }
 }
 
 GameObject* GameObject::FindChild(const std::wstring& name)
@@ -131,7 +142,7 @@ void GameObject::Start()
 
 void GameObject::Update(float deltaTime)
 {
-    if (!m_active)
+    if (!m_active || m_destroyed)
     {
         return;
     }
@@ -147,11 +158,13 @@ void GameObject::Update(float deltaTime)
     {
         child->Update(deltaTime);
     }
+
+    CleanupDestroyedChildren();
 }
 
 void GameObject::Render(ID2D1DeviceContext* d2dContext)
 {
-    if (!m_active)
+    if (!m_active || m_destroyed)
     {
         return;
     }
@@ -186,7 +199,7 @@ void GameObject::Render(ID2D1DeviceContext* d2dContext)
 
 void GameObject::DispatchCollisionEnter2D(const Collision2D& collision)
 {
-    if (!m_active)
+    if (!m_active || m_destroyed)
     {
         return;
     }
@@ -235,4 +248,17 @@ void GameObject::CollectRenderEntries(std::vector<RenderEntry>& entries, size_t&
     {
         child->CollectRenderEntries(entries, sequence);
     }
+}
+
+void GameObject::CleanupDestroyedChildren()
+{
+    m_children.erase(
+        std::remove_if(
+            m_children.begin(),
+            m_children.end(),
+            [](const std::unique_ptr<GameObject>& child)
+            {
+                return child && child->IsDestroyed();
+            }),
+        m_children.end());
 }

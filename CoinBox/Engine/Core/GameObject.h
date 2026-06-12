@@ -10,6 +10,8 @@
 #include <utility>
 #include <vector>
 
+class Scene;
+
 // GameObject는 씬 안에 존재하는 하나의 대상입니다.
 // GameObject 자체는 특별한 기능이 없고, Component를 붙여서 동작하게 만듭니다.
 class GameObject
@@ -24,11 +26,14 @@ public:
 
     bool IsActive() const { return m_active; }
     void SetActive(bool active) { m_active = active; }
+    bool IsDestroyed() const { return m_destroyed; }
+    void Destroy() { m_destroyed = true; }
 
     const std::wstring& GetName() const { return m_name; }
     void SetName(const std::wstring& name) { m_name = name; }
 
     GameObject* GetParent() const { return m_parent; }
+    Scene* GetScene() const { return m_scene; }
     GameObject* AddChild(std::unique_ptr<GameObject> child);
     GameObject* FindChild(const std::wstring& name);
     const GameObject* FindChild(const std::wstring& name) const;
@@ -121,11 +126,18 @@ public:
     }
 
 private:
+    friend class Scene;
+
+    void SetScene(Scene* scene);
+    void CleanupDestroyedChildren();
+
     Transform* m_transform = nullptr;
     Transform m_aniTransform;
     GameObject* m_parent = nullptr;
+    Scene* m_scene = nullptr;
     std::wstring m_name;
     bool m_active = true;
+    bool m_destroyed = false;
     bool m_initialized = false;
     bool m_started = false;
     std::vector<std::unique_ptr<Component>> m_components;

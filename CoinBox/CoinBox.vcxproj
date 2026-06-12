@@ -166,10 +166,19 @@
     <ClInclude Include="Engine\Scene\Scene.h" />
     <ClInclude Include="Engine\Scene\SceneManager.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="Game\Objects\PlayerBullet.h" />
+    <ClInclude Include="Game\Objects\UFOProjectile.h" />
+    <ClInclude Include="Game\Prefabs\GamePrefabs.h" />
     <ClInclude Include="PlayerCtrl.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="TitleScene.h" />
+    <ClInclude Include="UFOAttack.h" />
+    <ClInclude Include="UFOController.h" />
+    <ClInclude Include="UFODash.h" />
+    <ClInclude Include="UFOMovement.h" />
+    <ClInclude Include="UFOStats.h" />
+    <ClInclude Include="UFOSuction.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BackScene.cpp" />
@@ -199,8 +208,17 @@
     <ClCompile Include="Engine\Scene\Scene.cpp" />
     <ClCompile Include="Engine\Scene\SceneManager.cpp" />
     <ClCompile Include="Enum.h" />
+    <ClCompile Include="Game\Objects\PlayerBullet.cpp" />
+    <ClCompile Include="Game\Objects\UFOProjectile.cpp" />
+    <ClCompile Include="Game\Prefabs\GamePrefabs.cpp" />
     <ClCompile Include="PlayerCtrl.cpp" />
     <ClCompile Include="TitleScene.cpp" />
+    <ClCompile Include="UFOAttack.cpp" />
+    <ClCompile Include="UFOController.cpp" />
+    <ClCompile Include="UFODash.cpp" />
+    <ClCompile Include="UFOMovement.cpp" />
+    <ClCompile Include="UFOStats.cpp" />
+    <ClCompile Include="UFOSuction.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="CoinBox.rc" />

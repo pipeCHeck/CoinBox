@@ -64,6 +64,9 @@
     <Filter Include="Game\Characters">
       <UniqueIdentifier>{de60eb79-e752-45b1-afcf-ce576b0ce390}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Prefabs">
+      <UniqueIdentifier>{2e37a5b1-9114-453a-85de-3849015d2228}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Core\Component.h">
@@ -165,6 +168,33 @@
     <ClInclude Include="PlayerCtrl.h">
       <Filter>Game\Objects</Filter>
     </ClInclude>
+    <ClInclude Include="Game\Objects\PlayerBullet.h">
+      <Filter>Game\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\UFOProjectile.h">
+      <Filter>Game\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Prefabs\GamePrefabs.h">
+      <Filter>Game\Prefabs</Filter>
+    </ClInclude>
+    <ClInclude Include="UFOAttack.h">
+      <Filter>Game\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="UFOController.h">
+      <Filter>Game\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="UFODash.h">
+      <Filter>Game\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="UFOMovement.h">
+      <Filter>Game\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="UFOStats.h">
+      <Filter>Game\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="UFOSuction.h">
+      <Filter>Game\Objects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Core\Component.cpp">
@@ -216,6 +246,33 @@
       <Filter>Engine</Filter>
     </ClCompile>
     <ClCompile Include="PlayerCtrl.cpp">
+      <Filter>Game\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\PlayerBullet.cpp">
+      <Filter>Game\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\UFOProjectile.cpp">
+      <Filter>Game\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Prefabs\GamePrefabs.cpp">
+      <Filter>Game\Prefabs</Filter>
+    </ClCompile>
+    <ClCompile Include="UFOAttack.cpp">
+      <Filter>Game\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="UFOController.cpp">
+      <Filter>Game\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="UFODash.cpp">
+      <Filter>Game\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="UFOMovement.cpp">
+      <Filter>Game\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="UFOStats.cpp">
+      <Filter>Game\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="UFOSuction.cpp">
       <Filter>Game\Objects</Filter>
     </ClCompile>
     <ClCompile Include="BackScene.cpp">

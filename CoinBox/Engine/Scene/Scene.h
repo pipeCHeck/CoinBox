@@ -33,9 +33,15 @@ protected:
     virtual void OnRender(ID2D1DeviceContext* d2dContext) {}
 
 private:
+    void PrepareObject(GameObject* object);
+    void FlushPendingObjects();
+    void CleanupDestroyedObjects();
+
     bool m_initialized = false;
     bool m_started = false;
+    bool m_updating = false;
     std::vector<std::unique_ptr<GameObject>> m_objects;
+    std::vector<std::unique_ptr<GameObject>> m_pendingObjects;
 };
 
 // 백그라운드 씬은 데이터 관리용으로 두는 씬입니다.

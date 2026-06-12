@@ -2,7 +2,7 @@
 #include "Input.h"
 #include "GameObject.h"
 
-#include <Windows.h>
+// #include <Windows.h>
 
 namespace WizardRaid
 {
@@ -26,10 +26,9 @@ namespace WizardRaid
 
 		Vector2 testPos = Input::GetMousePositionInScreenCenter(); 
 		
-		wchar_t buffer[128];
-		swprintf_s(buffer, L"x: %.2f y: %.2f\n", testPos.x, testPos.y);
-		OutputDebugStringW(buffer);
-
+		//wchar_t buffer[128];
+		//swprintf_s(buffer, L"x: %.2f y: %.2f\n", testPos.x, testPos.y);
+		//OutputDebugStringW(buffer);
 
 		transform.position = SmoothFollow(transform.position, centerPos, 10.0f, deltaTime);
 	}
