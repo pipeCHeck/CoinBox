@@ -37,9 +37,6 @@
     <Filter Include="Game\Scenes">
       <UniqueIdentifier>{76db6e95-f275-4d16-a9f8-6de1c4764e40}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game\Objects">
-      <UniqueIdentifier>{ba2416f3-612f-4355-a0f3-4366d31420eb}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\Components">
       <UniqueIdentifier>{532b2fba-1f0c-4288-a687-95eda220e036}</UniqueIdentifier>
     </Filter>
@@ -61,11 +58,32 @@
     <Filter Include="Engine\Physics">
       <UniqueIdentifier>{6b4ca51a-3e09-46c2-8a39-0c63af6db964}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game\Characters">
-      <UniqueIdentifier>{de60eb79-e752-45b1-afcf-ce576b0ce390}</UniqueIdentifier>
+    <Filter Include="Engine\UI">
+      <UniqueIdentifier>{d4c280f1-fc03-4c9c-9be3-dc2039d6aa18}</UniqueIdentifier>
     </Filter>
     <Filter Include="Game\Prefabs">
       <UniqueIdentifier>{2e37a5b1-9114-453a-85de-3849015d2228}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Actors">
+      <UniqueIdentifier>{556c85fe-8aaa-47d7-85cc-5c938c5885d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Combat">
+      <UniqueIdentifier>{31901765-42f4-4099-8f61-478691e3bd5f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Items">
+      <UniqueIdentifier>{26346a85-9dc1-4bd4-8040-942531ec0ee3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Actors\UFO">
+      <UniqueIdentifier>{8032c939-b8b5-4535-8410-0da5153ccf0e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Actors\Enemies">
+      <UniqueIdentifier>{2c582f1c-524c-4f5c-9316-594d4dd08efe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Actors\Coffia">
+      <UniqueIdentifier>{a4b349fa-6698-43e3-86f7-d47fc17bf26f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Actors\Camera">
+      <UniqueIdentifier>{5ffbb5d9-8426-48b1-a839-b16b63540277}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -162,38 +180,65 @@
     <ClInclude Include="Engine\Animation\Animation.h">
       <Filter>Engine\Animation</Filter>
     </ClInclude>
-    <ClInclude Include="Game\Characters\CoffiaCharacterFactory.h">
-      <Filter>Game\Characters</Filter>
+    <ClInclude Include="Engine\UI\Canvas.h">
+      <Filter>Engine\UI</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerCtrl.h">
-      <Filter>Game\Objects</Filter>
+    <ClInclude Include="Engine\UI\UIButton.h">
+      <Filter>Engine\UI</Filter>
     </ClInclude>
-    <ClInclude Include="Game\Objects\PlayerBullet.h">
-      <Filter>Game\Objects</Filter>
+    <ClInclude Include="Engine\UI\UIElement.h">
+      <Filter>Engine\UI</Filter>
     </ClInclude>
-    <ClInclude Include="Game\Objects\UFOProjectile.h">
-      <Filter>Game\Objects</Filter>
+    <ClInclude Include="Engine\UI\UIImage.h">
+      <Filter>Engine\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\UI\UIPanel.h">
+      <Filter>Engine\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\UI\UIText.h">
+      <Filter>Engine\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\UI\UITransform.h">
+      <Filter>Engine\UI</Filter>
     </ClInclude>
     <ClInclude Include="Game\Prefabs\GamePrefabs.h">
       <Filter>Game\Prefabs</Filter>
     </ClInclude>
     <ClInclude Include="UFOAttack.h">
-      <Filter>Game\Objects</Filter>
+      <Filter>Game\Actors\UFO</Filter>
     </ClInclude>
     <ClInclude Include="UFOController.h">
-      <Filter>Game\Objects</Filter>
+      <Filter>Game\Actors\UFO</Filter>
     </ClInclude>
     <ClInclude Include="UFODash.h">
-      <Filter>Game\Objects</Filter>
+      <Filter>Game\Actors\UFO</Filter>
     </ClInclude>
     <ClInclude Include="UFOMovement.h">
-      <Filter>Game\Objects</Filter>
+      <Filter>Game\Actors\UFO</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\UFOProjectile.h">
+      <Filter>Game\Actors\UFO</Filter>
     </ClInclude>
     <ClInclude Include="UFOStats.h">
-      <Filter>Game\Objects</Filter>
+      <Filter>Game\Actors\UFO</Filter>
     </ClInclude>
     <ClInclude Include="UFOSuction.h">
-      <Filter>Game\Objects</Filter>
+      <Filter>Game\Actors\UFO</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Characters\CoffiaCharacterFactory.h">
+      <Filter>Game\Actors\Coffia</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerCtrl.h">
+      <Filter>Game\Actors\Coffia</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\PlayerBullet.h">
+      <Filter>Game\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="CoffiaAniCtrl.h">
+      <Filter>Game\Actors\Coffia</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraController.h">
+      <Filter>Game\Actors\Camera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -245,35 +290,8 @@
     <ClCompile Include="CoinBox.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerCtrl.cpp">
-      <Filter>Game\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Objects\PlayerBullet.cpp">
-      <Filter>Game\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Objects\UFOProjectile.cpp">
-      <Filter>Game\Objects</Filter>
-    </ClCompile>
     <ClCompile Include="Game\Prefabs\GamePrefabs.cpp">
       <Filter>Game\Prefabs</Filter>
-    </ClCompile>
-    <ClCompile Include="UFOAttack.cpp">
-      <Filter>Game\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="UFOController.cpp">
-      <Filter>Game\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="UFODash.cpp">
-      <Filter>Game\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="UFOMovement.cpp">
-      <Filter>Game\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="UFOStats.cpp">
-      <Filter>Game\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="UFOSuction.cpp">
-      <Filter>Game\Objects</Filter>
     </ClCompile>
     <ClCompile Include="BackScene.cpp">
       <Filter>Game\Scenes\Background</Filter>
@@ -302,8 +320,62 @@
     <ClCompile Include="Engine\Animation\Animation.cpp">
       <Filter>Engine\Animation</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\UI\Canvas.cpp">
+      <Filter>Engine\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\UI\UIButton.cpp">
+      <Filter>Engine\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\UI\UIElement.cpp">
+      <Filter>Engine\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\UI\UIImage.cpp">
+      <Filter>Engine\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\UI\UIPanel.cpp">
+      <Filter>Engine\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\UI\UIText.cpp">
+      <Filter>Engine\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\UI\UITransform.cpp">
+      <Filter>Engine\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UFOAttack.cpp">
+      <Filter>Game\Actors\UFO</Filter>
+    </ClCompile>
+    <ClCompile Include="UFOController.cpp">
+      <Filter>Game\Actors\UFO</Filter>
+    </ClCompile>
+    <ClCompile Include="UFODash.cpp">
+      <Filter>Game\Actors\UFO</Filter>
+    </ClCompile>
+    <ClCompile Include="UFOMovement.cpp">
+      <Filter>Game\Actors\UFO</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\UFOProjectile.cpp">
+      <Filter>Game\Actors\UFO</Filter>
+    </ClCompile>
+    <ClCompile Include="UFOStats.cpp">
+      <Filter>Game\Actors\UFO</Filter>
+    </ClCompile>
+    <ClCompile Include="UFOSuction.cpp">
+      <Filter>Game\Actors\UFO</Filter>
+    </ClCompile>
     <ClCompile Include="Game\Characters\CoffiaCharacterFactory.cpp">
-      <Filter>Game\Characters</Filter>
+      <Filter>Game\Actors\Coffia</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerCtrl.cpp">
+      <Filter>Game\Actors\Coffia</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\PlayerBullet.cpp">
+      <Filter>Game\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="CoffiaAniCtrl.cpp">
+      <Filter>Game\Actors\Coffia</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraController.cpp">
+      <Filter>Game\Actors\Camera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

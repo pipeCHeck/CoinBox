@@ -63,6 +63,7 @@ public:
     };
 
     void CollectRenderEntries(std::vector<RenderEntry>& entries, size_t& sequence);
+    void CollectRenderEntries(std::vector<RenderEntry>& entries, size_t& sequence, bool screenSpaceUI);
 
     // 이 오브젝트에 새 컴포넌트를 붙입니다.
     // 사용 예: object->AddComponent<SpriteRenderer>(image);

@@ -18,5 +18,8 @@ namespace WizardRaid {
 		if (Input::IsKeyDown('X')) {
 			animator->Play(L"Greeting_SmilingEyes_Clip");
 		}
+		if (Input::IsKeyDown('C')) {
+			animator->Play(L"PoliteGreeting_Clip");
+		}
 	}
 }

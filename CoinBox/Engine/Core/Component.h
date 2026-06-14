@@ -36,6 +36,9 @@ public:
     // 같은 GameObject 트리 안에서 렌더 순서를 정합니다. 값이 클수록 나중에 그립니다.
     virtual int GetRenderOrder() const { return 0; }
 
+    // Screen-space UI는 카메라 행렬의 영향을 받지 않는 별도 렌더 패스에서 그립니다.
+    virtual bool IsScreenSpaceUI() const { return false; }
+
 protected:
     static float Clamp01(float value)
     {

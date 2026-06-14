@@ -233,6 +233,11 @@ void GameObject::DispatchCollisionExit2D(const Collision2D& collision)
 
 void GameObject::CollectRenderEntries(std::vector<RenderEntry>& entries, size_t& sequence)
 {
+    CollectRenderEntries(entries, sequence, false);
+}
+
+void GameObject::CollectRenderEntries(std::vector<RenderEntry>& entries, size_t& sequence, bool screenSpaceUI)
+{
     if (!m_active)
     {
         return;
@@ -240,13 +245,18 @@ void GameObject::CollectRenderEntries(std::vector<RenderEntry>& entries, size_t&
 
     for (const auto& component : m_components)
     {
+        if (component->IsScreenSpaceUI() != screenSpaceUI)
+        {
+            continue;
+        }
+
         // renderOrder가 같은 컴포넌트끼리는 추가된 순서를 유지합니다.
         entries.push_back(RenderEntry{ component->GetRenderOrder(), sequence++, component.get() });
     }
 
     for (const auto& child : m_children)
     {
-        child->CollectRenderEntries(entries, sequence);
+        child->CollectRenderEntries(entries, sequence, screenSpaceUI);
     }
 }
 

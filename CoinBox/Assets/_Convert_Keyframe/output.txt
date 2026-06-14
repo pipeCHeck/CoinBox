@@ -1,0 +1,7 @@
+	clip.AddKeyFrame(clip.ScaleTo(0, L"EyeR_White", Vector2(1, 1.2f), 15, EaseType::EaseInOut));
+	clip.AddKeyFrame(clip.ScaleTo(15, L"EyeR_White", Vector2(0.95f, 0), 20, EaseType::EaseInOut));
+	clip.AddKeyFrame(clip.ScaleTo(155, L"EyeR_White", Vector2(1, 1.2f), 25, EaseType::EaseInOut));
+	clip.AddKeyFrame(clip.ScaleTo(180, L"EyeR_White", Vector2(1, 1), 15, EaseType::EaseInOut));
+
+	clip.AddKeyFrame(clip.PositionTo(15, L"EyeR_White", Vector2(0, -2), 20, EaseType::EaseInOut));
+	clip.AddKeyFrame(clip.PositionTo(155, L"EyeR_White", Vector2(0, 0), 25, EaseType::EaseInOut));

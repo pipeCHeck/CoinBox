@@ -118,6 +118,34 @@ void Scene::Render(ID2D1DeviceContext* d2dContext)
     {
         d2dContext->SetTransform(previousTransform);
     }
+
+    std::vector<GameObject::RenderEntry> uiRenderEntries;
+    sequence = 0;
+
+    for (const auto& object : m_objects)
+    {
+        object->Init();
+        object->CollectRenderEntries(uiRenderEntries, sequence, true);
+    }
+
+    std::stable_sort(uiRenderEntries.begin(), uiRenderEntries.end(),
+        [](const GameObject::RenderEntry& left, const GameObject::RenderEntry& right)
+        {
+            if (left.order != right.order)
+            {
+                return left.order < right.order;
+            }
+
+            return left.sequence < right.sequence;
+        });
+
+    for (const GameObject::RenderEntry& entry : uiRenderEntries)
+    {
+        if (entry.component)
+        {
+            entry.component->Render(d2dContext);
+        }
+    }
 }
 
 GameObject* Scene::AddObject(std::unique_ptr<GameObject> object)
