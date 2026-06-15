@@ -91,6 +91,8 @@ public:
     void Stop();
     bool IsPlaying() const { return m_currentClipIndex >= 0; }
     const std::wstring& GetCurrentClipName() const;
+    void ResetAnimation();
+    void ResetAnimationRecursive(GameObject* object);
 
     void Update(float deltaTime) override;
 

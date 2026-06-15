@@ -19,6 +19,7 @@ namespace WizardRaid {
 			animator->Play(L"Greeting_SmilingEyes_Clip");
 		}
 		if (Input::IsKeyDown('C')) {
+			animator->ResetAnimation();
 			animator->Play(L"PoliteGreeting_Clip");
 		}
 	}

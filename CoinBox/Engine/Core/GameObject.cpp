@@ -79,6 +79,12 @@ const GameObject* GameObject::FindChild(const std::wstring& name) const
     return nullptr;
 }
 
+//int GameObject::GetChildCount() const
+std::vector<std::unique_ptr<GameObject>>& GameObject::GetChildren() 
+{
+    return m_children;
+}
+
 Transform GameObject::GetWorldTransform() const
 {
     const Transform localTransform = GetTransform() + GetAniTransform();

@@ -37,6 +37,7 @@ public:
     GameObject* AddChild(std::unique_ptr<GameObject> child);
     GameObject* FindChild(const std::wstring& name);
     const GameObject* FindChild(const std::wstring& name) const;
+    std::vector<std::unique_ptr<GameObject>>& GetChildren();
 
     // Transform도 Component지만, 모든 오브젝트가 기본으로 가지므로 편의 함수를 둡니다.
     // 컴포넌트에서는 GetOwner()->GetTransform()으로 위치/회전/크기를 읽고 바꿉니다.

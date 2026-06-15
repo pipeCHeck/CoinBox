@@ -189,6 +189,29 @@ const std::wstring& Animator::GetCurrentClipName() const
     return m_clips[m_currentClipIndex].GetName();
 }
 
+void Animator::ResetAnimation()
+{
+    ResetAnimationRecursive(GetOwner());
+}
+
+void Animator::ResetAnimationRecursive(GameObject* object)
+{
+    if (object == nullptr)
+    {
+        return;
+    }
+
+    Transform& aniTransform = object->GetAniTransform();
+    aniTransform.position = Vector2(0, 0);
+    aniTransform.rotation = 0;
+    aniTransform.scale = Vector2(1, 1);
+
+    for (const auto& child : object->GetChildren())
+    {
+        ResetAnimationRecursive(child.get());
+    }
+}
+
 void Animator::Update(float deltaTime)
 {
     if (m_currentClipIndex < 0 || m_currentClipIndex >= static_cast<int>(m_clips.size()))

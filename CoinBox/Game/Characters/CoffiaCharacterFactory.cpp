@@ -65,14 +65,14 @@ namespace WizardRaid
         // 눈 파츠는 Null 노드를 한 번 거쳐 붙여서, 나중에 눈 전체를 묶어서 움직일 수 있게 합니다.
         rig.AddNode(L"Nose", L"Null_EyeL", Vector2(-80.0f, -20.0f), Vector2(), SpriteSheetInfo(), false);
         rig.AddNode(L"Nose", L"Null_EyeR", Vector2(80.0f, -20.0f), Vector2(), SpriteSheetInfo(), false);
-        rig.AddNode(L"Null_EyeL", L"EyeL_White", Vector2(0.0f, 0.0f), Vector2(), SpriteSheetInfo(), true, 25);
-        rig.AddNode(L"EyeL_White", L"EyeL_Pupil", Vector2(12.0f, -2.0f), Vector2(), SpriteSheetInfo{ 1, 2, 2, 1 }, true, 26);
-        rig.AddNode(L"Null_EyeL", L"EyeL_Lid", Vector2(-2.0f, -24.0f), Vector2(), SpriteSheetInfo{ 1, 2, 2, 1 }, true, 27);
-        rig.AddNode(L"Null_EyeL", L"EyeL_Brow", Vector2(3.0f, -70.0f), Vector2(), SpriteSheetInfo(), true, 28);
-        rig.AddNode(L"Null_EyeR", L"EyeR_White", Vector2(0.0f, 0.0f), Vector2(), SpriteSheetInfo(), true, 25);
-        rig.AddNode(L"EyeR_White", L"EyeR_Pupil", Vector2(-12.0f, -2.0f), Vector2(), SpriteSheetInfo{ 1, 2, 2, 1 }, true, 26);
-        rig.AddNode(L"Null_EyeR", L"EyeR_Lid", Vector2(2.0f, -24.0f), Vector2(), SpriteSheetInfo{ 1, 2, 2, 1 }, true, 27);
-        rig.AddNode(L"Null_EyeR", L"EyeR_Brow", Vector2(-3.0f, -70.0f), Vector2(), SpriteSheetInfo(), true, 28);
+        rig.AddNode(L"Null_EyeL", L"EyeL_White", Vector2(0.0f, 0.0f), Vector2(), SpriteSheetInfo(), true, 75);
+        rig.AddNode(L"EyeL_White", L"EyeL_Pupil", Vector2(12.0f, -2.0f), Vector2(), SpriteSheetInfo{ 1, 2, 2, 1 }, true, 76);
+        rig.AddNode(L"Null_EyeL", L"EyeL_Lid", Vector2(-2.0f, -24.0f), Vector2(), SpriteSheetInfo{ 1, 2, 2, 1 }, true, 77);
+        rig.AddNode(L"Null_EyeL", L"EyeL_Brow", Vector2(3.0f, -70.0f), Vector2(), SpriteSheetInfo(), true, 78);
+        rig.AddNode(L"Null_EyeR", L"EyeR_White", Vector2(0.0f, 0.0f), Vector2(), SpriteSheetInfo(), true, 75);
+        rig.AddNode(L"EyeR_White", L"EyeR_Pupil", Vector2(-12.0f, -2.0f), Vector2(), SpriteSheetInfo{ 1, 2, 2, 1 }, true, 76);
+        rig.AddNode(L"Null_EyeR", L"EyeR_Lid", Vector2(2.0f, -24.0f), Vector2(), SpriteSheetInfo{ 1, 2, 2, 1 }, true, 77);
+        rig.AddNode(L"Null_EyeR", L"EyeR_Brow", Vector2(-3.0f, -70.0f), Vector2(), SpriteSheetInfo(), true, 78);
 
         // HairB*는 뒷머리라 얼굴 뒤에 그립니다.
         // HairF*/HairSide*/Ahoge*는 양수 renderOrder를 써서 얼굴 위에 그립니다.
@@ -133,6 +133,8 @@ namespace WizardRaid
     {
         AnimationClip clip(L"Greeting_SmilingEyes_Clip");
         clip.SetLooping(true);
+
+        clip.AddKeyFrame(clip.RotationTo(0, L"Body", 0, 10, EaseType::EaseInOut));
 
         clip.AddKeyFrame(clip.Active(0, L"ArmL", true));
         clip.AddKeyFrame(clip.RotationTo(0, L"ArmL", -135, 0, EaseType::Linear));
