@@ -3,6 +3,7 @@
 #include "Component.h"
 #include "Vector2.h"
 
+#include <functional>
 #include <string>
 #include <vector>
 
@@ -86,10 +87,14 @@ private:
 class Animator : public Component
 {
 public:
+    using AnimationCompleteCallback = std::function<void()>;
+
     void AddClip(const AnimationClip& clip);
     bool Play(const std::wstring& clipName, bool restart = true);
+    bool Play(const std::wstring& clipName, AnimationCompleteCallback onComplete, bool restart = true);
     void Stop();
     bool IsPlaying() const { return m_currentClipIndex >= 0; }
+    bool IsFinished() const { return m_currentClipIndex >= 0 && m_finished; }
     const std::wstring& GetCurrentClipName() const;
     void ResetAnimation();
     void ResetAnimationRecursive(GameObject* object);
@@ -101,8 +106,11 @@ private:
     void ResetRuntimeState(AnimationClip& clip);
     void InitializeKeyFrameStartValue(KeyFrame& keyFrame);
     void ApplyKeyFrame(KeyFrame& keyFrame, float t);
+    void CompleteCurrentClip();
 
     std::vector<AnimationClip> m_clips;
     int m_currentClipIndex = -1;
     float m_time = 0.0f;
+    bool m_finished = false;
+    AnimationCompleteCallback m_onComplete;
 };

@@ -4,6 +4,7 @@
 #include "SpriteRenderer.h"
 
 #include <cmath>
+#include <utility>
 
 namespace
 {
@@ -152,6 +153,11 @@ void Animator::AddClip(const AnimationClip& clip)
 
 bool Animator::Play(const std::wstring& clipName, bool restart)
 {
+    return Play(clipName, nullptr, restart);
+}
+
+bool Animator::Play(const std::wstring& clipName, AnimationCompleteCallback onComplete, bool restart)
+{
     for (size_t i = 0; i < m_clips.size(); ++i)
     {
         if (m_clips[i].GetName() != clipName)
@@ -161,11 +167,18 @@ bool Animator::Play(const std::wstring& clipName, bool restart)
 
         if (m_currentClipIndex == static_cast<int>(i) && !restart)
         {
+            if (onComplete)
+            {
+                m_onComplete = std::move(onComplete);
+            }
+
             return true;
         }
 
         m_currentClipIndex = static_cast<int>(i);
         m_time = 0.0f;
+        m_finished = false;
+        m_onComplete = std::move(onComplete);
         ResetRuntimeState(m_clips[i]);
         return true;
     }
@@ -177,6 +190,8 @@ void Animator::Stop()
 {
     m_currentClipIndex = -1;
     m_time = 0.0f;
+    m_finished = false;
+    m_onComplete = nullptr;
 }
 
 const std::wstring& Animator::GetCurrentClipName() const
@@ -223,13 +238,14 @@ void Animator::Update(float deltaTime)
     std::vector<KeyFrame>& keyFrames = clip.GetKeyFrames();
     if (keyFrames.empty())
     {
+        CompleteCurrentClip();
         return;
     }
 
     m_time += deltaTime;
 
     const float clipLength = clip.GetLength();
-    if (clipLength > 0.0f && m_time > clipLength)
+    if (clipLength > 0.0f && m_time >= clipLength)
     {
         if (clip.IsLooping())
         {
@@ -239,6 +255,7 @@ void Animator::Update(float deltaTime)
         else
         {
             m_time = clipLength;
+            m_finished = true;
         }
     }
 
@@ -295,6 +312,11 @@ void Animator::Update(float deltaTime)
 
         const float t = (m_time - keyFrame.startTime) / keyFrame.duration;
         ApplyKeyFrame(keyFrame, ApplyEase(t, keyFrame.easeType));
+    }
+
+    if (m_finished)
+    {
+        CompleteCurrentClip();
     }
 }
 
@@ -396,5 +418,28 @@ void Animator::ApplyKeyFrame(KeyFrame& keyFrame, float t)
     case KeyFrameType::Active:
         target->SetActive(keyFrame.valueInt == 1);
         break;
+    }
+}
+
+void Animator::CompleteCurrentClip()
+{
+    if (m_currentClipIndex < 0 || m_currentClipIndex >= static_cast<int>(m_clips.size()))
+    {
+        return;
+    }
+
+    AnimationClip& clip = m_clips[m_currentClipIndex];
+    if (clip.IsLooping())
+    {
+        return;
+    }
+
+    m_finished = true;
+    AnimationCompleteCallback onComplete = std::move(m_onComplete);
+    m_onComplete = nullptr;
+
+    if (onComplete)
+    {
+        onComplete();
     }
 }

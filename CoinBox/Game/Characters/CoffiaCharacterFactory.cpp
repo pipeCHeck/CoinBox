@@ -299,7 +299,7 @@ namespace WizardRaid
     AnimationClip CoffiaCharacterFactory::ChinRest_Clip()
     {
         AnimationClip clip(L"ChinRest_Clip");
-        clip.SetLooping(true);
+        clip.SetLooping(false);
 
         clip.AddKeyFrame(clip.PositionTo(0, L"ArmL", Vector2(0, -49), 35, EaseType::EaseInOut));
         clip.AddKeyFrame(clip.PositionTo(35, L"ArmL", Vector2(-47, -13), 15, EaseType::EaseInOut));

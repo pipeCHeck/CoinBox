@@ -9,6 +9,8 @@ namespace WizardRaid {
 		void Start() override;
 		void Update(float deltaTime) override;
 	private:
+		void OnChinRestFinished();
+
 		Animator* animator;
 	};
 
