@@ -13,7 +13,7 @@ namespace WizardRaid {
 	void CoffiaAniCtrl::Update(float deltaTime)
 	{
 		if (Input::IsKeyDown('Z')) {
-			animator->Play(L"ChinRest_Clip", [this]() {
+			animator->Play(L"ChinRest_Clip", AnimationResetMode::Reset, [this]() {
 				OnChinRestFinished();
 			});
 		}
@@ -21,8 +21,7 @@ namespace WizardRaid {
 			animator->Play(L"Greeting_SmilingEyes_Clip");
 		}
 		if (Input::IsKeyDown('C')) {
-			animator->ResetAnimation();
-			animator->Play(L"PoliteGreeting_Clip");
+			animator->Play(L"PoliteGreeting_Clip", AnimationResetMode::Reset);
 		}
 	}
 
@@ -32,7 +31,6 @@ namespace WizardRaid {
 			return;
 		}
 
-		animator->ResetAnimation();
-		animator->Play(L"PoliteGreeting_Clip");
+		animator->Play(L"PoliteGreeting_Clip", AnimationResetMode::Reset);
 	}
 }

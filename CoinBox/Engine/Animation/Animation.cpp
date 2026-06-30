@@ -151,12 +151,7 @@ void Animator::AddClip(const AnimationClip& clip)
     m_clips.push_back(clip);
 }
 
-bool Animator::Play(const std::wstring& clipName, bool restart)
-{
-    return Play(clipName, nullptr, restart);
-}
-
-bool Animator::Play(const std::wstring& clipName, AnimationCompleteCallback onComplete, bool restart)
+bool Animator::Play(const std::wstring& clipName, AnimationResetMode resetMode, AnimationCompleteCallback onComplete)
 {
     for (size_t i = 0; i < m_clips.size(); ++i)
     {
@@ -165,14 +160,13 @@ bool Animator::Play(const std::wstring& clipName, AnimationCompleteCallback onCo
             continue;
         }
 
-        if (m_currentClipIndex == static_cast<int>(i) && !restart)
-        {
-            if (onComplete)
-            {
-                m_onComplete = std::move(onComplete);
-            }
+        const bool shouldResetState =
+            resetMode == AnimationResetMode::Reset
+            || (resetMode == AnimationResetMode::UseClipDefault && m_clips[i].ShouldResetStateOnPlay());
 
-            return true;
+        if (shouldResetState)
+        {
+            ResetAnimationState();
         }
 
         m_currentClipIndex = static_cast<int>(i);
@@ -206,7 +200,7 @@ const std::wstring& Animator::GetCurrentClipName() const
 
 void Animator::ResetAnimation()
 {
-    ResetAnimationRecursive(GetOwner());
+    ResetAnimationState();
 }
 
 void Animator::ResetAnimationRecursive(GameObject* object)
@@ -224,6 +218,70 @@ void Animator::ResetAnimationRecursive(GameObject* object)
     for (const auto& child : object->GetChildren())
     {
         ResetAnimationRecursive(child.get());
+    }
+}
+
+void Animator::Init()
+{
+    CaptureInitialStates();
+}
+
+void Animator::CaptureInitialStates()
+{
+    m_initialStates.clear();
+    CaptureInitialStatesRecursive(GetOwner());
+}
+
+void Animator::CaptureInitialStatesRecursive(GameObject* object)
+{
+    if (object == nullptr)
+    {
+        return;
+    }
+
+    InitialState state;
+    state.object = object;
+    state.active = object->IsActive();
+
+    if (SpriteRenderer* renderer = object->GetComponent<SpriteRenderer>())
+    {
+        state.hasRenderer = true;
+        state.spriteFrame = renderer->GetFrame();
+    }
+
+    m_initialStates.push_back(state);
+
+    for (const auto& child : object->GetChildren())
+    {
+        CaptureInitialStatesRecursive(child.get());
+    }
+}
+
+void Animator::ResetAnimationState()
+{
+    if (m_initialStates.empty())
+    {
+        CaptureInitialStates();
+    }
+
+    ResetAnimationRecursive(GetOwner());
+
+    for (const InitialState& state : m_initialStates)
+    {
+        if (state.object == nullptr || state.object->IsDestroyed())
+        {
+            continue;
+        }
+
+        state.object->SetActive(state.active);
+
+        if (state.hasRenderer)
+        {
+            if (SpriteRenderer* renderer = state.object->GetComponent<SpriteRenderer>())
+            {
+                renderer->SetFrame(state.spriteFrame);
+            }
+        }
     }
 }
 

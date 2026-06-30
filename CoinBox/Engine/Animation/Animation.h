@@ -24,6 +24,13 @@ enum class EaseType
     EaseInOut,
 };
 
+enum class AnimationResetMode
+{
+    UseClipDefault,
+    Reset,
+    KeepState,
+};
+
 struct KeyFrame
 {
     // 런타임에는 초 단위로 저장합니다. AnimationClip 헬퍼 함수들은 프레임 단위를 입력받습니다.
@@ -54,6 +61,9 @@ public:
     bool IsLooping() const { return m_looping; }
     void SetLooping(bool looping) { m_looping = looping; }
 
+    bool ShouldResetStateOnPlay() const { return m_resetStateOnPlay; }
+    void SetResetStateOnPlay(bool resetStateOnPlay) { m_resetStateOnPlay = resetStateOnPlay; }
+
     void AddKeyFrame(const KeyFrame& keyFrame);
     std::vector<KeyFrame>& GetKeyFrames() { return m_keyFrames; }
     const std::vector<KeyFrame>& GetKeyFrames() const { return m_keyFrames; }
@@ -81,6 +91,7 @@ public:
 private:
     std::wstring m_name;
     bool m_looping = false;
+    bool m_resetStateOnPlay = false;
     std::vector<KeyFrame> m_keyFrames;
 };
 
@@ -90,8 +101,10 @@ public:
     using AnimationCompleteCallback = std::function<void()>;
 
     void AddClip(const AnimationClip& clip);
-    bool Play(const std::wstring& clipName, bool restart = true);
-    bool Play(const std::wstring& clipName, AnimationCompleteCallback onComplete, bool restart = true);
+    bool Play(
+        const std::wstring& clipName,
+        AnimationResetMode resetMode = AnimationResetMode::UseClipDefault,
+        AnimationCompleteCallback onComplete = nullptr);
     void Stop();
     bool IsPlaying() const { return m_currentClipIndex >= 0; }
     bool IsFinished() const { return m_currentClipIndex >= 0 && m_finished; }
@@ -99,16 +112,29 @@ public:
     void ResetAnimation();
     void ResetAnimationRecursive(GameObject* object);
 
+    void Init() override;
     void Update(float deltaTime) override;
 
 private:
+    struct InitialState
+    {
+        GameObject* object = nullptr;
+        bool active = true;
+        bool hasRenderer = false;
+        int spriteFrame = 0;
+    };
+
     float ApplyEase(float t, EaseType easeType) const;
+    void CaptureInitialStates();
+    void CaptureInitialStatesRecursive(GameObject* object);
+    void ResetAnimationState();
     void ResetRuntimeState(AnimationClip& clip);
     void InitializeKeyFrameStartValue(KeyFrame& keyFrame);
     void ApplyKeyFrame(KeyFrame& keyFrame, float t);
     void CompleteCurrentClip();
 
     std::vector<AnimationClip> m_clips;
+    std::vector<InitialState> m_initialStates;
     int m_currentClipIndex = -1;
     float m_time = 0.0f;
     bool m_finished = false;
